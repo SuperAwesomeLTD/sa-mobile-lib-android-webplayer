@@ -21,11 +21,16 @@ import tv.superawesome.lib.sautils.SAUtils;
  */
 public class SAWebPlayer extends WebView {
 
-    /** the internal listener */
-    private SAWebPlayerInterface listener;
+    /**
+     * the internal listener
+     */
+    private SAWebPlayerEventInterface eventListener;
+    private SAWebPlayerClickInterface clickListener;
     private float scaleFactor = 0;
 
-    /** Constructors */
+    /**
+     * Constructors
+     */
     public SAWebPlayer(Context context) {
         super(context);
     }
@@ -37,11 +42,23 @@ public class SAWebPlayer extends WebView {
     public SAWebPlayer(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
+        //setup listeners
+        eventListener = new SAWebPlayerEventInterface() {
+            @Override
+            public void SAWebPlayerEventHandled(SAWebPlayerEvent event) {
+            }
+        };
+        clickListener = new SAWebPlayerClickInterface() {
+            @Override
+            public void SAWebPlayerClickHandled(String url) {
+            }
+        };
+
         /** enable JS */
         this.getSettings().setJavaScriptEnabled(true);
 
         /** get current scale factor */
-        scaleFactor = SAUtils.getScaleFactor((Activity)context);
+        scaleFactor = SAUtils.getScaleFactor((Activity) context);
 
         /** setup a custom WebView client */
         this.setWebViewClient(new WebViewClient() {
@@ -57,17 +74,14 @@ public class SAWebPlayer extends WebView {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-           }
+            }
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.contains("file:///")) {
                     return false;
                 } else {
-                    if (listener != null) {
-                        listener.saWebViewWillNavigate(url);
-                    }
-
+                    clickListener.SAWebPlayerClickHandled(url);
                     return true;
                 }
             }
@@ -87,18 +101,19 @@ public class SAWebPlayer extends WebView {
 
     /**
      * Public function that specially loads HTML
-     * @param html - the html to load
-     * @param adWidth - the current ad Width (e.g. 320px)
-     * @param adHeight - the current ad Height (e.g. 50px)
-     * @param frameWidth - the actual web player Width (e.g. 1255px)
+     *
+     * @param html        - the html to load
+     * @param adWidth     - the current ad Width (e.g. 320px)
+     * @param adHeight    - the current ad Height (e.g. 50px)
+     * @param frameWidth  - the actual web player Width (e.g. 1255px)
      * @param frameHeight - the actual web player Height (e.g. 800px)
      */
-    public void loadHTML(String html, float adWidth, float adHeight, float frameWidth, float frameHeight){
+    public void loadHTML(String html, float adWidth, float adHeight, float frameWidth, float frameHeight) {
         /** calc params */
         String _html = html;
-        _html = _html.replace("_WIDTH_", "" + (int)(adWidth));
-        _html = _html.replace("_HEIGHT_", "" + (int)(adHeight));
-        _html = _html.replace("_SCALE_", "" + ((frameWidth/scaleFactor)/adWidth));
+        _html = _html.replace("_WIDTH_", "" + (int) (adWidth));
+        _html = _html.replace("_HEIGHT_", "" + (int) (adHeight));
+        _html = _html.replace("_SCALE_", "" + ((frameWidth / scaleFactor) / adWidth));
 
         /** get the context */
         Context context = this.getContext();
@@ -113,28 +128,27 @@ public class SAWebPlayer extends WebView {
             stream = new FileOutputStream(file);
             stream.write(_html.getBytes());
             stream.close();
-        } catch (IOException e1){
+        } catch (IOException e1) {
             e1.printStackTrace();
-
-            if (listener != null) {
-                listener.saWebViewDidFail();
-            }
+            eventListener.SAWebPlayerEventHandled(SAWebPlayerEvent.Web_Error);
         }
 
         /** load HTML data */
         this.loadUrl("file://" + file.getAbsolutePath());
 
         /** call success listener */
-        if (listener != null){
-            listener.saWebViewDidLoad();
+        eventListener.SAWebPlayerEventHandled(SAWebPlayerEvent.Web_Start);
+    }
+
+    public void setEventListener(SAWebPlayerEventInterface listener) {
+        if (listener != null) {
+            eventListener = listener;
         }
     }
 
-    /**
-     * Assign the listener
-     * @param listener an object of SAWebViewListener type
-     */
-    public void setListener(SAWebPlayerInterface listener) {
-        this.listener = listener;
+    public void setClickListener(SAWebPlayerClickInterface listener) {
+        if (listener != null) {
+            clickListener = listener;
+        }
     }
 }
