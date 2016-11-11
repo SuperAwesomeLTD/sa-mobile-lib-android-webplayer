@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -13,8 +15,6 @@ import android.webkit.WebViewClient;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import tv.superawesome.lib.sautils.SAUtils;
 
 /**
  * Created by gabriel.coman on 30/12/15.
@@ -58,7 +58,10 @@ public class SAWebPlayer extends WebView {
         this.getSettings().setJavaScriptEnabled(true);
 
         /** get current scale factor */
-        scaleFactor = SAUtils.getScaleFactor((Activity) context);
+        DisplayMetrics metrics = new DisplayMetrics();
+        Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
+        display.getMetrics(metrics);
+        scaleFactor =  (float)metrics.densityDpi / 160.0F;
 
         /** setup a custom WebView client */
         this.setWebViewClient(new WebViewClient() {
