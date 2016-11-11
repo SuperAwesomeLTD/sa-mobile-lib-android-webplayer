@@ -7,8 +7,6 @@ checkout:
     - cp local.properties.ci local.properties
 
 test:
-  pre:
-    - circle-android wait-for-boot
   override:
     - ./gradlew clean
     - ./gradlew build
