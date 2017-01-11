@@ -1,7 +1,13 @@
+/**
+ * @Copyright:   SuperAwesome Trading Limited 2017
+ * @Author:      Gabriel Coman (gabriel.coman@superawesome.tv)
+ */
 package tv.superawesome.lib.sawebplayer;
 
 /**
- * Created by gabriel.coman on 26/08/16.
+ * WebPlayer event enum, containing two main events:
+ *  - Web_Start: happens when the web view content is fully loaded
+ *  - Web_Error: happens when something prevents the web view from properly loading the content
  */
 public enum SAWebPlayerEvent {
     Web_Start,
