@@ -150,6 +150,7 @@ class SAWebContainer extends FrameLayout {
     private int      contentWidth = 0;
     private int      contentHeight = 0;
     private boolean  loadedOnce = false;
+    private FrameLayout.LayoutParams layoutParams;
 
     /**
      * Main constructor
@@ -220,23 +221,12 @@ class SAWebContainer extends FrameLayout {
         return new Rect((int)X, (int)Y, (int)W, (int)H);
     }
 
-    /**
-     * Overridden method from FrameLayout that notifies this object when it's size has changed
-     * (usually because of a rotation or such).
-     * If that happens then it's the method's job to recalculate the new scale to be applied
-     * on the child webview and position it so that it fits perfectly
-     *
-     * @param w     new width
-     * @param h     new height
-     * @param oldw  old width
-     * @param oldh  old height
-     */
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
 
         // create sizes for the scaled view
-        Rect sizes = mapSourceSizeIntoBoundingSize(contentWidth, contentHeight, w, h);
+        Rect sizes = mapSourceSizeIntoBoundingSize(contentWidth, contentHeight, right, bottom);
         int scaledX = sizes.left;
         int scaledY = sizes.top;
         int scaledW = sizes.right;
@@ -246,7 +236,6 @@ class SAWebContainer extends FrameLayout {
         float resultY = scaledH / (float) (contentHeight);
 
         // create size for the web view
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(contentWidth, contentHeight);
         layoutParams.setMargins(scaledX, scaledY, 0, 0);
         webView.setLayoutParams(layoutParams);
 
@@ -265,6 +254,7 @@ class SAWebContainer extends FrameLayout {
     void setContentSize (int width, int height) {
         contentWidth = width;
         contentHeight = height;
+        layoutParams = new FrameLayout.LayoutParams(contentWidth, contentHeight);
     }
 
     /**
