@@ -186,6 +186,9 @@ class SAWebContainer extends FrameLayout {
         this.setClipChildren(false);
         this.setClipToPadding(false);
 
+        // set the layout params
+        layoutParams = new FrameLayout.LayoutParams(0, 0);
+
         // create the web view
         webView = new SAWebView(context);
         addView(webView);
