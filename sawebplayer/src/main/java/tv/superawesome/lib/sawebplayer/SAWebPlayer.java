@@ -150,7 +150,6 @@ class SAWebContainer extends FrameLayout {
     private int      contentWidth = 0;
     private int      contentHeight = 0;
     private boolean  loadedOnce = false;
-    private FrameLayout.LayoutParams layoutParams;
 
     /**
      * Main constructor
@@ -185,9 +184,6 @@ class SAWebContainer extends FrameLayout {
         this.setBackgroundColor(Color.TRANSPARENT);
         this.setClipChildren(false);
         this.setClipToPadding(false);
-
-        // set the layout params
-        layoutParams = new FrameLayout.LayoutParams(0, 0);
 
         // create the web view
         webView = new SAWebView(context);
@@ -224,6 +220,15 @@ class SAWebContainer extends FrameLayout {
         return new Rect((int)X, (int)Y, (int)W, (int)H);
     }
 
+    /**
+     * Overridden onLayout method
+     *
+     * @param changed   whether the current layout has changd
+     * @param left      X pos
+     * @param top       Y pos
+     * @param right     Width
+     * @param bottom    Height
+     */
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
@@ -238,14 +243,12 @@ class SAWebContainer extends FrameLayout {
         float resultX = scaledW / (float) (contentWidth);
         float resultY = scaledH / (float) (contentHeight);
 
-        // create size for the web view
-        layoutParams.setMargins(scaledX, scaledY, 0, 0);
-        webView.setLayoutParams(layoutParams);
-
         webView.setPivotX(0);
         webView.setPivotY(0);
         webView.setScaleX(resultX);
         webView.setScaleY(resultY);
+        webView.setTranslationX(scaledX);
+        webView.setTranslationY(scaledY);
     }
 
     /**
@@ -257,7 +260,9 @@ class SAWebContainer extends FrameLayout {
     void setContentSize (int width, int height) {
         contentWidth = width;
         contentHeight = height;
+        FrameLayout.LayoutParams layoutParams;
         layoutParams = new FrameLayout.LayoutParams(contentWidth, contentHeight);
+        webView.setLayoutParams(layoutParams);
     }
 
     /**
