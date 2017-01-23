@@ -14,5 +14,5 @@ public interface SAWebPlayerEventInterface {
      *
      * @param event the event that just happened
      */
-    void SAWebPlayerEventHandled(SAWebPlayerEvent event);
+    void saWebPlayerDidReceiveEvent (SAWebPlayerEvent event);
 }

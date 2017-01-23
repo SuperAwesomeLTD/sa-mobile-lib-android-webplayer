@@ -14,5 +14,5 @@ public interface SAWebPlayerClickInterface {
      *
      * @param url the destination URL the click is bound to
      */
-    void SAWebPlayerClickHandled(String url);
+    void saWebPlayerDidReceiveClick (String url);
 }
