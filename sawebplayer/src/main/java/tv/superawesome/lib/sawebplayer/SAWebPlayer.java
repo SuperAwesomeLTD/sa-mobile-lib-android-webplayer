@@ -152,7 +152,6 @@ class SAWebContainer extends FrameLayout {
     public SAWebView webView;
     private int      contentWidth = 0;
     private int      contentHeight = 0;
-    private boolean  loadedOnce = false;
     private boolean  forceLoad = false;
 
     /**
@@ -282,8 +281,6 @@ class SAWebContainer extends FrameLayout {
      * @param html        the html to load
      */
     public void loadHTML(String html) {
-        if (loadedOnce) return;
-        loadedOnce = true;
         webView.loadHTML(html);
     }
 }
@@ -332,7 +329,7 @@ class SAWebView extends WebView {
         clickListener = new SAWebPlayerClickInterface() {@Override public void saWebPlayerDidReceiveClick(String url) {}};
 
         // set bg color transparent
-        this.setBackgroundColor(Color.TRANSPARENT);
+        this.setBackgroundColor(Color.RED);
 
         // enable javascript
         this.setInitialScale(100);
@@ -380,7 +377,7 @@ class SAWebView extends WebView {
         String fullHtml = baseHtml.replace("_CONTENT_", html);
 
         // get the context
-        Context context = this.getContext();
+        Context context = getContext();
 
         // start creating a temporary file
         File path = context.getFilesDir();
