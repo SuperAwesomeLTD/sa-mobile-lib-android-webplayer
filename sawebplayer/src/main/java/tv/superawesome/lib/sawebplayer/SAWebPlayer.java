@@ -131,6 +131,15 @@ public class SAWebPlayer extends Fragment {
     public void loadHTML(String html) {
         webContainer.loadHTML(html);
     }
+
+    /**
+     * Getter for the internal web view
+     *
+     * @return the used web view instance
+     */
+    public WebView getWebView () {
+        return webContainer != null ? webContainer.webView : null;
+    }
 }
 
 /**
