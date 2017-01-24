@@ -27,7 +27,11 @@ import java.io.FileOutputStream;
 
 public class SAWebPlayer extends Fragment {
 
-    // only mmeber variable, a SAWebContainer instance
+    // private interface objects used for the web player callback mechanism
+    private SAWebPlayerEventInterface eventListener;
+    private SAWebPlayerClickInterface clickListener;
+
+    // only member variable, a SAWebContainer instance
     private SAWebContainer webContainer;
 
     /**
@@ -92,9 +96,6 @@ public class SAWebPlayer extends Fragment {
      * @param height expected height
      */
     public void setContentSize (int width, int height) {
-        // set the size of the content to be rendered
-        webContainer.setContentSize(width, height);
-
         // create new layout params
         int match = ViewGroup.LayoutParams.MATCH_PARENT;
         FrameLayout.LayoutParams layoutParams;
@@ -102,6 +103,11 @@ public class SAWebPlayer extends Fragment {
 
         // force update layout params
         webContainer.setLayoutParams(layoutParams);
+
+        // set the size of the content to be rendered
+        webContainer.setContentSize(width, height);
+        webContainer.setEventListener(eventListener);
+        webContainer.setClickListener(clickListener);
     }
 
     /**
@@ -110,7 +116,7 @@ public class SAWebPlayer extends Fragment {
      * @param listener library user listener implementation
      */
     public void setEventListener(SAWebPlayerEventInterface listener) {
-        webContainer.webView.setEventListener(listener);
+        eventListener = listener;
     }
 
     /**
@@ -119,7 +125,7 @@ public class SAWebPlayer extends Fragment {
      * @param listener library user listener implementation
      */
     public void setClickListener(SAWebPlayerClickInterface listener) {
-        webContainer.webView.setClickListener(listener);
+        clickListener = listener;
     }
 
     /**
@@ -187,11 +193,6 @@ class SAWebContainer extends FrameLayout {
         this.setBackgroundColor(Color.TRANSPARENT);
         this.setClipChildren(false);
         this.setClipToPadding(false);
-
-        // create the web view
-        webView = new SAWebView(context);
-        webView.setLayoutParams(new FrameLayout.LayoutParams(0, 0));
-        addView(webView);
     }
 
     /**
@@ -251,12 +252,14 @@ class SAWebContainer extends FrameLayout {
         float resultX = scaledW / (float) (contentWidth);
         float resultY = scaledH / (float) (contentHeight);
 
-        webView.setPivotX(0);
-        webView.setPivotY(0);
-        webView.setScaleX(resultX);
-        webView.setScaleY(resultY);
-        webView.setTranslationX(scaledX);
-        webView.setTranslationY(scaledY);
+        if (webView != null) {
+            webView.setPivotX(0);
+            webView.setPivotY(0);
+            webView.setScaleX(resultX);
+            webView.setScaleY(resultY);
+            webView.setTranslationX(scaledX);
+            webView.setTranslationY(scaledY);
+        }
     }
 
     /**
@@ -266,11 +269,24 @@ class SAWebContainer extends FrameLayout {
      * @param height    expected content height
      */
     void setContentSize (int width, int height) {
+
         contentWidth = width;
         contentHeight = height;
+
         forceLoad = true;
-        FrameLayout.LayoutParams layoutParams;
-        layoutParams = new FrameLayout.LayoutParams(contentWidth, contentHeight);
+
+        if (webView != null) {
+            this.removeView(webView);
+            webView = null;
+        }
+
+        webView = new SAWebView(getContext());
+        webView.clearCache(true);
+        addView(webView);
+
+//        webView.setLayoutParams(new FrameLayout.LayoutParams(0, 0));
+
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(contentWidth, contentHeight);
         webView.setLayoutParams(layoutParams);
     }
 
@@ -282,6 +298,24 @@ class SAWebContainer extends FrameLayout {
      */
     public void loadHTML(String html) {
         webView.loadHTML(html);
+    }
+
+    /**
+     * Setter method that adds an actual event listener to the web player
+     *
+     * @param listener library user listener implementation
+     */
+    public void setEventListener(SAWebPlayerEventInterface listener) {
+        webView.setEventListener(listener);
+    }
+
+    /**
+     * Setter method that adds an actual click listener to the web player
+     *
+     * @param listener library user listener implementation
+     */
+    public void setClickListener(SAWebPlayerClickInterface listener) {
+        webView.setClickListener(listener);
     }
 }
 
@@ -368,7 +402,7 @@ class SAWebView extends WebView {
      * This method loads HTML into the web view for ad use. It takes into account the source
      * html string, the needed ad with and height as well as the bounding frame width and height
      *
-     * @param html        the html to load
+     * @param html the html to load
      */
     public void loadHTML(String html) {
         // replace HTML template parameters with their corresponding actual values,
