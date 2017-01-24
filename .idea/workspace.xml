@@ -41,94 +41,7 @@
           <activation />
         </task>
         <projects_view>
-          <tree_state>
-            <PATH>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="sa-mobile-lib-android-webplayer" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-            </PATH>
-            <PATH>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="sa-mobile-lib-android-webplayer" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="sa-mobile-lib-android-webplayer" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ModuleNode" />
-              </PATH_ELEMENT>
-            </PATH>
-            <PATH>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="sa-mobile-lib-android-webplayer" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="sa-mobile-lib-android-webplayer" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ModuleNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="Tasks" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.TasksNode" />
-              </PATH_ELEMENT>
-            </PATH>
-            <PATH>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="sa-mobile-lib-android-webplayer" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="sa-mobile-lib-android-webplayer" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ModuleNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="Tasks" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.TasksNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="publishing" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.TasksNode$1" />
-              </PATH_ELEMENT>
-            </PATH>
-            <PATH>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="sa-mobile-lib-android-webplayer" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="sa-mobile-lib-android-webplayer" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ModuleNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="Tasks" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.TasksNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="other" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.TasksNode$1" />
-              </PATH_ELEMENT>
-            </PATH>
-          </tree_state>
+          <tree_state />
         </projects_view>
       </state>
     </system>
@@ -141,19 +54,17 @@
       <file leaf-file-name="SAWebPlayer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sawebplayer/src/main/java/tv/superawesome/lib/sawebplayer/SAWebPlayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3090">
-              <caret line="324" column="6" selection-start-line="324" selection-start-column="6" selection-end-line="324" selection-end-column="6" />
+            <state relative-caret-position="-1559">
+              <caret line="315" column="5" selection-start-line="315" selection-start-column="5" selection-end-line="315" selection-end-column="5" />
               <folding>
                 <element signature="e#0#121#0" expanded="true" />
-                <element signature="e#3985#3986#0" expanded="true" />
-                <element signature="e#4025#4026#0" expanded="true" />
-                <element signature="e#4254#4255#0" expanded="true" />
-                <element signature="e#4294#4295#0" expanded="true" />
-                <element signature="e#4591#4592#0" expanded="true" />
-                <element signature="e#4634#4635#0" expanded="true" />
+                <element signature="e#4016#4017#0" expanded="true" />
+                <element signature="e#4059#4060#0" expanded="true" />
+                <element signature="e#4288#4289#0" expanded="true" />
+                <element signature="e#4328#4329#0" expanded="true" />
+                <element signature="e#4557#4558#0" expanded="true" />
+                <element signature="e#4597#4598#0" expanded="true" />
                 <element signature="method#mapSourceSizeIntoBoundingSize#0;class#SAWebContainer#0" expanded="false" />
-                <element signature="e#9649#9650#0" expanded="true" />
-                <element signature="e#9687#9688#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -202,8 +113,8 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/superawesome/tv/sawebplayerdemoapp/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="163">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state relative-caret-position="358">
+              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#765#977#0" expanded="true" />
@@ -3479,7 +3390,7 @@
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24711168" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26444158" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26379976" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -3496,7 +3407,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="27" />
+      <option name="time" value="32" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -3553,15 +3464,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#121#0" expanded="true" />
-            <element signature="e#3985#3986#0" expanded="true" />
-            <element signature="e#4025#4026#0" expanded="true" />
-            <element signature="e#4254#4255#0" expanded="true" />
-            <element signature="e#4294#4295#0" expanded="true" />
-            <element signature="e#4591#4592#0" expanded="true" />
-            <element signature="e#4634#4635#0" expanded="true" />
+            <element signature="e#4016#4017#0" expanded="true" />
+            <element signature="e#4059#4060#0" expanded="true" />
+            <element signature="e#4288#4289#0" expanded="true" />
+            <element signature="e#4328#4329#0" expanded="true" />
+            <element signature="e#4557#4558#0" expanded="true" />
+            <element signature="e#4597#4598#0" expanded="true" />
             <element signature="method#mapSourceSizeIntoBoundingSize#0;class#SAWebContainer#0" expanded="false" />
-            <element signature="e#9649#9650#0" expanded="true" />
-            <element signature="e#9687#9688#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3614,15 +3523,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#121#0" expanded="true" />
-            <element signature="e#3985#3986#0" expanded="true" />
-            <element signature="e#4025#4026#0" expanded="true" />
-            <element signature="e#4254#4255#0" expanded="true" />
-            <element signature="e#4294#4295#0" expanded="true" />
-            <element signature="e#4591#4592#0" expanded="true" />
-            <element signature="e#4634#4635#0" expanded="true" />
+            <element signature="e#4016#4017#0" expanded="true" />
+            <element signature="e#4059#4060#0" expanded="true" />
+            <element signature="e#4288#4289#0" expanded="true" />
+            <element signature="e#4328#4329#0" expanded="true" />
+            <element signature="e#4557#4558#0" expanded="true" />
+            <element signature="e#4597#4598#0" expanded="true" />
             <element signature="method#mapSourceSizeIntoBoundingSize#0;class#SAWebContainer#0" expanded="false" />
-            <element signature="e#9649#9650#0" expanded="true" />
-            <element signature="e#9687#9688#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3675,15 +3582,13 @@
           <caret line="152" column="5" selection-start-line="152" selection-start-column="5" selection-end-line="152" selection-end-column="5" />
           <folding>
             <element signature="e#0#121#0" expanded="true" />
-            <element signature="e#3985#3986#0" expanded="true" />
-            <element signature="e#4025#4026#0" expanded="true" />
-            <element signature="e#4254#4255#0" expanded="true" />
-            <element signature="e#4294#4295#0" expanded="true" />
-            <element signature="e#4591#4592#0" expanded="true" />
-            <element signature="e#4634#4635#0" expanded="true" />
+            <element signature="e#4016#4017#0" expanded="true" />
+            <element signature="e#4059#4060#0" expanded="true" />
+            <element signature="e#4288#4289#0" expanded="true" />
+            <element signature="e#4328#4329#0" expanded="true" />
+            <element signature="e#4557#4558#0" expanded="true" />
+            <element signature="e#4597#4598#0" expanded="true" />
             <element signature="method#mapSourceSizeIntoBoundingSize#0;class#SAWebContainer#0" expanded="false" />
-            <element signature="e#9649#9650#0" expanded="true" />
-            <element signature="e#9687#9688#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3751,15 +3656,13 @@
           <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
           <folding>
             <element signature="e#0#121#0" expanded="true" />
-            <element signature="e#3985#3986#0" expanded="true" />
-            <element signature="e#4025#4026#0" expanded="true" />
-            <element signature="e#4254#4255#0" expanded="true" />
-            <element signature="e#4294#4295#0" expanded="true" />
-            <element signature="e#4591#4592#0" expanded="true" />
-            <element signature="e#4634#4635#0" expanded="true" />
+            <element signature="e#4016#4017#0" expanded="true" />
+            <element signature="e#4059#4060#0" expanded="true" />
+            <element signature="e#4288#4289#0" expanded="true" />
+            <element signature="e#4328#4329#0" expanded="true" />
+            <element signature="e#4557#4558#0" expanded="true" />
+            <element signature="e#4597#4598#0" expanded="true" />
             <element signature="method#mapSourceSizeIntoBoundingSize#0;class#SAWebContainer#0" expanded="false" />
-            <element signature="e#9649#9650#0" expanded="true" />
-            <element signature="e#9687#9688#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4750,27 +4653,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sawebplayer/src/main/java/tv/superawesome/lib/sawebplayer/SAWebPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3090">
-          <caret line="324" column="6" selection-start-line="324" selection-start-column="6" selection-end-line="324" selection-end-column="6" />
+        <state relative-caret-position="-1559">
+          <caret line="315" column="5" selection-start-line="315" selection-start-column="5" selection-end-line="315" selection-end-column="5" />
           <folding>
             <element signature="e#0#121#0" expanded="true" />
-            <element signature="e#3985#3986#0" expanded="true" />
-            <element signature="e#4025#4026#0" expanded="true" />
-            <element signature="e#4254#4255#0" expanded="true" />
-            <element signature="e#4294#4295#0" expanded="true" />
-            <element signature="e#4591#4592#0" expanded="true" />
-            <element signature="e#4634#4635#0" expanded="true" />
+            <element signature="e#4016#4017#0" expanded="true" />
+            <element signature="e#4059#4060#0" expanded="true" />
+            <element signature="e#4288#4289#0" expanded="true" />
+            <element signature="e#4328#4329#0" expanded="true" />
+            <element signature="e#4557#4558#0" expanded="true" />
+            <element signature="e#4597#4598#0" expanded="true" />
             <element signature="method#mapSourceSizeIntoBoundingSize#0;class#SAWebContainer#0" expanded="false" />
-            <element signature="e#9649#9650#0" expanded="true" />
-            <element signature="e#9687#9688#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/superawesome/tv/sawebplayerdemoapp/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        <state relative-caret-position="358">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#765#977#0" expanded="true" />

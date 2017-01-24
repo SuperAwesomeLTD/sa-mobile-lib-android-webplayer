@@ -4,7 +4,6 @@
  */
 package tv.superawesome.lib.sawebplayer;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -57,18 +56,16 @@ public class SAWebPlayer extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        // get activity
-        Activity activity = getActivity();
-
-        // create new layout params
-        int match = ViewGroup.LayoutParams.MATCH_PARENT;
-        FrameLayout.LayoutParams layoutParams;
-        layoutParams = new FrameLayout.LayoutParams(match, match);
-
+        // if it's the first time the Fragment is being created, also create a web container
+        // to return as view
         if (webContainer == null) {
-            webContainer = new SAWebContainer(activity);
-            webContainer.setLayoutParams(layoutParams);
+            webContainer = new SAWebContainer(getActivity());
+            int match = ViewGroup.LayoutParams.MATCH_PARENT;
+            webContainer.setLayoutParams(new FrameLayout.LayoutParams(match, match));
         }
+        // if the fragment is being recreated, the "webContainer" object should still be there
+        // on account of #setRetainInstance(true) in #onCreate, so just remove it from the
+        // superview so that when return it's going to be re-added by Android
         else {
 
             // get parent
@@ -96,18 +93,21 @@ public class SAWebPlayer extends Fragment {
      * @param height expected height
      */
     public void setContentSize (int width, int height) {
-        // create new layout params
-        int match = ViewGroup.LayoutParams.MATCH_PARENT;
-        FrameLayout.LayoutParams layoutParams;
-        layoutParams = new FrameLayout.LayoutParams(match, match);
-
-        // force update layout params
-        webContainer.setLayoutParams(layoutParams);
-
         // set the size of the content to be rendered
         webContainer.setContentSize(width, height);
+        // and set listener to be added to the SAWebView instance, when it's created
         webContainer.setEventListener(eventListener);
         webContainer.setClickListener(clickListener);
+    }
+
+    /**
+     * This method loads HTML into the web view for ad use. It takes into account the source
+     * html string, the needed ad with and height as well as the bounding frame width and height
+     *
+     * @param html        the html to load
+     */
+    public void loadHTML(String html) {
+        webContainer.loadHTML(html);
     }
 
     /**
@@ -129,16 +129,6 @@ public class SAWebPlayer extends Fragment {
     }
 
     /**
-     * This method loads HTML into the web view for ad use. It takes into account the source
-     * html string, the needed ad with and height as well as the bounding frame width and height
-     *
-     * @param html        the html to load
-     */
-    public void loadHTML(String html) {
-        webContainer.loadHTML(html);
-    }
-
-    /**
      * Getter for the internal web view
      *
      * @return the used web view instance
@@ -156,9 +146,7 @@ class SAWebContainer extends FrameLayout {
 
     // members for the SAWebContainer
     public SAWebView webView;
-    private int      contentWidth = 0;
-    private int      contentHeight = 0;
-    private boolean  forceLoad = false;
+    private boolean forceResize = false;
 
     /**
      * Main constructor
@@ -238,21 +226,25 @@ class SAWebContainer extends FrameLayout {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
-        if (!changed && !forceLoad) return;
+        if (!changed && !forceResize) return;
 
-        forceLoad = false;
-
-        // create sizes for the scaled view
-        Rect sizes = mapSourceSizeIntoBoundingSize(contentWidth, contentHeight, right, bottom);
-        int scaledX = sizes.left;
-        int scaledY = sizes.top;
-        int scaledW = sizes.right;
-        int scaledH = sizes.bottom;
-
-        float resultX = scaledW / (float) (contentWidth);
-        float resultY = scaledH / (float) (contentHeight);
+        forceResize = false;
 
         if (webView != null) {
+
+            int contentWidth = webView.getMeasuredWidth();
+            int contentHeight = webView.getMeasuredHeight();
+
+            // create sizes for the scaled view
+            Rect sizes = mapSourceSizeIntoBoundingSize(contentWidth, contentHeight, right, bottom);
+            int scaledX = sizes.left;
+            int scaledY = sizes.top;
+            int scaledW = sizes.right;
+            int scaledH = sizes.bottom;
+
+            float resultX = scaledW / (float) (contentWidth);
+            float resultY = scaledH / (float) (contentHeight);
+
             webView.setPivotX(0);
             webView.setPivotY(0);
             webView.setScaleX(resultX);
@@ -270,23 +262,22 @@ class SAWebContainer extends FrameLayout {
      */
     void setContentSize (int width, int height) {
 
-        contentWidth = width;
-        contentHeight = height;
+        // force resize of the
+        forceResize = true;
 
-        forceLoad = true;
-
+        // remove previous web view
         if (webView != null) {
             this.removeView(webView);
             webView = null;
         }
 
+        // recreate web view
         webView = new SAWebView(getContext());
         webView.clearCache(true);
         addView(webView);
 
-//        webView.setLayoutParams(new FrameLayout.LayoutParams(0, 0));
-
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(contentWidth, contentHeight);
+        // make it as big as the width & height of the content
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, height);
         webView.setLayoutParams(layoutParams);
     }
 
@@ -297,7 +288,9 @@ class SAWebContainer extends FrameLayout {
      * @param html        the html to load
      */
     public void loadHTML(String html) {
-        webView.loadHTML(html);
+        if (webView != null) {
+            webView.loadHTML(html);
+        }
     }
 
     /**
@@ -306,7 +299,9 @@ class SAWebContainer extends FrameLayout {
      * @param listener library user listener implementation
      */
     public void setEventListener(SAWebPlayerEventInterface listener) {
-        webView.setEventListener(listener);
+        if (webView != null) {
+            webView.setEventListener(listener);
+        }
     }
 
     /**
@@ -315,7 +310,9 @@ class SAWebContainer extends FrameLayout {
      * @param listener library user listener implementation
      */
     public void setClickListener(SAWebPlayerClickInterface listener) {
-        webView.setClickListener(listener);
+        if (webView != null) {
+            webView.setClickListener(listener);
+        }
     }
 }
 
