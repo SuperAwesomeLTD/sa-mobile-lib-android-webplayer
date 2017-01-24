@@ -12,15 +12,10 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.webkit.ConsoleMessage;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
@@ -29,7 +24,6 @@ import android.widget.RelativeLayout;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class SAWebPlayer extends Fragment {
 
@@ -150,6 +144,7 @@ class SAWebContainer extends FrameLayout {
     private int      contentWidth = 0;
     private int      contentHeight = 0;
     private boolean  loadedOnce = false;
+    private boolean  forceLoad = false;
 
     /**
      * Main constructor
@@ -187,6 +182,7 @@ class SAWebContainer extends FrameLayout {
 
         // create the web view
         webView = new SAWebView(context);
+        webView.setLayoutParams(new FrameLayout.LayoutParams(0, 0));
         addView(webView);
     }
 
@@ -223,7 +219,7 @@ class SAWebContainer extends FrameLayout {
     /**
      * Overridden onLayout method
      *
-     * @param changed   whether the current layout has changd
+     * @param changed   whether the current layout has changed
      * @param left      X pos
      * @param top       Y pos
      * @param right     Width
@@ -232,6 +228,10 @@ class SAWebContainer extends FrameLayout {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
+
+        if (!changed && !forceLoad) return;
+
+        forceLoad = false;
 
         // create sizes for the scaled view
         Rect sizes = mapSourceSizeIntoBoundingSize(contentWidth, contentHeight, right, bottom);
@@ -260,6 +260,7 @@ class SAWebContainer extends FrameLayout {
     void setContentSize (int width, int height) {
         contentWidth = width;
         contentHeight = height;
+        forceLoad = true;
         FrameLayout.LayoutParams layoutParams;
         layoutParams = new FrameLayout.LayoutParams(contentWidth, contentHeight);
         webView.setLayoutParams(layoutParams);
@@ -321,6 +322,9 @@ class SAWebView extends WebView {
         // setup the default click listener, so as it's never null
         clickListener = new SAWebPlayerClickInterface() {@Override public void saWebPlayerDidReceiveClick(String url) {}};
 
+        // set bg color transparent
+        this.setBackgroundColor(Color.TRANSPARENT);
+
         // enable javascript
         this.setInitialScale(100);
         this.getSettings().setJavaScriptEnabled(true);
@@ -363,7 +367,7 @@ class SAWebView extends WebView {
     public void loadHTML(String html) {
         // replace HTML template parameters with their corresponding actual values,
         // before loading the final HTML into the web player
-        String baseHtml = "<html><header><style>html, body, div { margin: 0px; padding: 0px; overflow: hidden; }</style></header><body>_CONTENT_</body></html>";
+        String baseHtml = "<html><header><style>html, body, div { margin: 0px; padding: 0px; width: 100%; height: 100%; }</style></header><body>_CONTENT_</body></html>";
         String fullHtml = baseHtml.replace("_CONTENT_", html);
 
         // get the context
@@ -390,6 +394,20 @@ class SAWebView extends WebView {
             // send error event here
             eventListener.saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Error);
         }
+    }
+
+    /**
+     * Overridden onLayout method
+     *
+     * @param changed   whether the current layout has changed
+     * @param left      X pos
+     * @param top       Y pos
+     * @param right     Width
+     * @param bottom    Height
+     */
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
     }
 
     /**
