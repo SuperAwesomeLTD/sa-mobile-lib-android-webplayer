@@ -329,7 +329,7 @@ class SAWebView extends WebView {
         clickListener = new SAWebPlayerClickInterface() {@Override public void saWebPlayerDidReceiveClick(String url) {}};
 
         // set bg color transparent
-        this.setBackgroundColor(Color.RED);
+        this.setBackgroundColor(Color.TRANSPARENT);
 
         // enable javascript
         this.setInitialScale(100);

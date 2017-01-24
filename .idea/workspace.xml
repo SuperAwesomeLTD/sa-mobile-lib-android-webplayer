@@ -51,16 +51,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SAWebPlayer.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SAWebPlayer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sawebplayer/src/main/java/tv/superawesome/lib/sawebplayer/SAWebPlayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26">
-              <caret line="378" column="8" selection-start-line="378" selection-start-column="8" selection-end-line="378" selection-end-column="8" />
+            <state relative-caret-position="255">
+              <caret line="282" column="39" selection-start-line="282" selection-start-column="39" selection-end-line="282" selection-end-column="39" />
               <folding>
                 <element signature="e#0#121#0" expanded="true" />
                 <element signature="e#4346#4347#0" expanded="true" />
                 <element signature="e#4389#4390#0" expanded="true" />
-                <element signature="e#9239#9240#0" expanded="true" />
                 <element signature="e#9277#9278#0" expanded="true" />
               </folding>
             </state>
@@ -451,8 +450,8 @@
       <file leaf-file-name="WebView.java" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-23/android/webkit/WebView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="945" column="23" selection-start-line="945" selection-start-column="23" selection-end-line="945" selection-end-column="23" />
+            <state relative-caret-position="199">
+              <caret line="1189" column="53" selection-start-line="1189" selection-start-column="31" selection-end-line="1189" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -492,7 +491,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="local.properties" pinned="false" current-in-tab="true">
+      <file leaf-file-name="local.properties" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/local.properties">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="150">
@@ -3099,8 +3098,8 @@
         <option value="$PROJECT_DIR$/sawebplayer/src/main/java/tv/superawesome/lib/sawebplayer/SAWebView.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/superawesome/tv/sawebplayerdemoapp/MainActivity.java" />
-        <option value="$PROJECT_DIR$/sawebplayer/src/main/java/tv/superawesome/lib/sawebplayer/SAWebPlayer.java" />
         <option value="$PROJECT_DIR$/local.properties" />
+        <option value="$PROJECT_DIR$/sawebplayer/src/main/java/tv/superawesome/lib/sawebplayer/SAWebPlayer.java" />
       </list>
     </option>
   </component>
@@ -3845,7 +3844,6 @@
             <element signature="e#0#121#0" expanded="true" />
             <element signature="e#4346#4347#0" expanded="true" />
             <element signature="e#4389#4390#0" expanded="true" />
-            <element signature="e#9239#9240#0" expanded="true" />
             <element signature="e#9277#9278#0" expanded="true" />
           </folding>
         </state>
@@ -3901,7 +3899,6 @@
             <element signature="e#0#121#0" expanded="true" />
             <element signature="e#4346#4347#0" expanded="true" />
             <element signature="e#4389#4390#0" expanded="true" />
-            <element signature="e#9239#9240#0" expanded="true" />
             <element signature="e#9277#9278#0" expanded="true" />
           </folding>
         </state>
@@ -3957,7 +3954,6 @@
             <element signature="e#0#121#0" expanded="true" />
             <element signature="e#4346#4347#0" expanded="true" />
             <element signature="e#4389#4390#0" expanded="true" />
-            <element signature="e#9239#9240#0" expanded="true" />
             <element signature="e#9277#9278#0" expanded="true" />
           </folding>
         </state>
@@ -4028,7 +4024,6 @@
             <element signature="e#0#121#0" expanded="true" />
             <element signature="e#4346#4347#0" expanded="true" />
             <element signature="e#4389#4390#0" expanded="true" />
-            <element signature="e#9239#9240#0" expanded="true" />
             <element signature="e#9277#9278#0" expanded="true" />
           </folding>
         </state>
@@ -5090,14 +5085,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-23/android/webkit/WebView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="945" column="23" selection-start-line="945" selection-start-column="23" selection-end-line="945" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-23/android/webkit/WebViewProvider.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="259">
@@ -5116,25 +5103,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sawebplayer/src/main/java/tv/superawesome/lib/sawebplayer/SAWebPlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
-          <caret line="378" column="8" selection-start-line="378" selection-start-column="8" selection-end-line="378" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#121#0" expanded="true" />
-            <element signature="e#4346#4347#0" expanded="true" />
-            <element signature="e#4389#4390#0" expanded="true" />
-            <element signature="e#9239#9240#0" expanded="true" />
-            <element signature="e#9277#9278#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/local.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="21" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-23/android/webkit/WebView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="1189" column="53" selection-start-line="1189" selection-start-column="31" selection-end-line="1189" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sawebplayer/src/main/java/tv/superawesome/lib/sawebplayer/SAWebPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="282" column="39" selection-start-line="282" selection-start-column="39" selection-end-line="282" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#121#0" expanded="true" />
+            <element signature="e#4346#4347#0" expanded="true" />
+            <element signature="e#4389#4390#0" expanded="true" />
+            <element signature="e#9277#9278#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
