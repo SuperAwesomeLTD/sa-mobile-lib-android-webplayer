@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -321,6 +322,8 @@ class SAWebContainer extends FrameLayout {
  */
 class SAWebView extends WebView {
 
+    private boolean finishedLoading = false;
+
     // private interface objects used for the web player callback mechanism
     private SAWebPlayerEventInterface eventListener;
     private SAWebPlayerClickInterface clickListener;
@@ -380,15 +383,16 @@ class SAWebView extends WebView {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                finishedLoading = true;
             }
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url.contains("file:///")) {
-                    return false;
-                } else {
+                if (finishedLoading) {
                     clickListener.saWebPlayerDidReceiveClick(url);
                     return true;
+                } else {
+                    return false;
                 }
             }
 
@@ -407,30 +411,11 @@ class SAWebView extends WebView {
         String baseHtml = "<html><header><style>html, body, div { margin: 0px; padding: 0px; width: 100%; height: 100%; }</style></header><body>_CONTENT_</body></html>";
         String fullHtml = baseHtml.replace("_CONTENT_", html);
 
-        // get the context
-        Context context = getContext();
+        // load data directly, not from file as before
+        this.loadData(fullHtml, "text/html", "UTF-8");
 
-        // start creating a temporary file
-        File path = context.getFilesDir();
-        File file = new File(path, "tmpHTML.html");
-
-        // write to the tmp file
-        FileOutputStream stream;
-        try {
-            stream = new FileOutputStream(file);
-            stream.write(fullHtml.getBytes());
-            stream.close();
-
-            // load HTML data from a file
-            this.loadUrl("file://" + file.getAbsolutePath());
-
-            // call success listener
-            eventListener.saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Start);
-
-        } catch (Exception e) {
-            // send error event here
-            eventListener.saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Error);
-        }
+        // call success listener
+        eventListener.saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Start);
     }
 
     /**
