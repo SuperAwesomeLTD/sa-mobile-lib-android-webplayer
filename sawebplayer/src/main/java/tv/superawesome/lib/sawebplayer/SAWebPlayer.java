@@ -15,29 +15,24 @@ import android.view.ViewTreeObserver;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class SAWebPlayer extends Fragment implements SAWebPlayerEventInterface, SAWebPlayerClickInterface {
+public class SAWebPlayer extends Fragment implements SAWebPlayerEventInterface {
 
     private SAWebView webView = null;
     private int contentWidth = 0;
     private int contentHeight = 0;
-    private String html = null;
 
     // interface objects used for the web player callback mechanism
     private SAWebPlayerEventInterface eventListener;
-    private SAWebPlayerClickInterface clickListener;
 
     public SAWebPlayer() {
         //setup the default event listener, so as it's never null
-        eventListener = new SAWebPlayerEventInterface() {@Override public void saWebPlayerDidReceiveEvent(SAWebPlayerEvent event) {}};
-        // setup the default click listener, so as it's never null
-        clickListener = new SAWebPlayerClickInterface() {@Override public void saWebPlayerDidReceiveClick(String url) {}};
+        eventListener = new SAWebPlayerEventInterface() {@Override public void saWebPlayerDidReceiveEvent(SAWebPlayerEvent event, String destination) {}};
     }
 
-    public SAWebPlayer(int width, int height, String html) {
+    public SAWebPlayer(int width, int height) {
         this();
         contentWidth = width;
         contentHeight = height;
-        this.html = html;
     }
 
     @Override
@@ -52,9 +47,8 @@ public class SAWebPlayer extends Fragment implements SAWebPlayerEventInterface, 
         if (webView == null) {
             webView = new SAWebView(getActivity());
             webView.setBackgroundColor(Color.TRANSPARENT);
-            webView.clickListener = this;
             webView.eventListener = this;
-            webView.loadHTML(html);
+            this.saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Prepared, null);
         } else {
             if (container != null) {
                 container.removeView(webView);
@@ -102,6 +96,12 @@ public class SAWebPlayer extends Fragment implements SAWebPlayerEventInterface, 
         return new Rect((int)X, (int)Y, (int)W, (int)H);
     }
 
+    public void loadHTML (String html) {
+        if (webView != null) {
+            webView.loadHTML(html);
+        }
+    }
+
     public SAWebView getWebView () {
         return webView;
     }
@@ -115,23 +115,9 @@ public class SAWebPlayer extends Fragment implements SAWebPlayerEventInterface, 
         eventListener = listener != null ? listener : eventListener;
     }
 
-    /**
-     * Setter method that adds an actual click listener to the web player
-     *
-     * @param listener library user listener implementation
-     */
-    public void setClickListener(SAWebPlayerClickInterface listener) {
-        clickListener = listener != null ? listener : clickListener;
-    }
-
     @Override
-    public void saWebPlayerDidReceiveClick(String url) {
-        clickListener.saWebPlayerDidReceiveClick(url);
-    }
-
-    @Override
-    public void saWebPlayerDidReceiveEvent(SAWebPlayerEvent event) {
-        eventListener.saWebPlayerDidReceiveEvent(event);
+    public void saWebPlayerDidReceiveEvent(SAWebPlayerEvent event, String destination) {
+        eventListener.saWebPlayerDidReceiveEvent(event, destination);
     }
 }
 
@@ -141,7 +127,6 @@ class SAWebView extends WebView {
 
     // interface objects used for the web player callback mechanism
     SAWebPlayerEventInterface eventListener;
-    SAWebPlayerClickInterface clickListener;
 
     public SAWebView(Context context) {
         this(context, null, 0);
@@ -180,9 +165,8 @@ class SAWebView extends WebView {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                Log.d("SuperAwesome", "Click lstn " + clickListener);
                 if (finishedLoading) {
-                    clickListener.saWebPlayerDidReceiveClick(url);
+                    eventListener.saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Click, url);
                     return true;
                 } else {
                     return false;
@@ -206,6 +190,6 @@ class SAWebView extends WebView {
         this.loadData(fullHtml, "text/html", "UTF-8");
 
         // call success listener
-        eventListener.saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Start);
+        eventListener.saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Start, null);
     }
 }

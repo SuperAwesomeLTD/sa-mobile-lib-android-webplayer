@@ -10,6 +10,8 @@ package tv.superawesome.lib.sawebplayer;
  *  - Web_Error: happens when something prevents the web view from properly loading the content
  */
 public enum SAWebPlayerEvent {
+    Web_Prepared,
     Web_Start,
-    Web_Error
+    Web_Error,
+    Web_Click
 }

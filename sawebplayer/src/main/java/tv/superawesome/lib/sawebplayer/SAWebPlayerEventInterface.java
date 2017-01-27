@@ -12,7 +12,8 @@ public interface SAWebPlayerEventInterface {
     /**
      * Main method of the interface
      *
-     * @param event the event that just happened
+     * @param event         the event that just happened
+     * @param destination   the destination URL
      */
-    void saWebPlayerDidReceiveEvent (SAWebPlayerEvent event);
+    void saWebPlayerDidReceiveEvent (SAWebPlayerEvent event, String destination);
 }
