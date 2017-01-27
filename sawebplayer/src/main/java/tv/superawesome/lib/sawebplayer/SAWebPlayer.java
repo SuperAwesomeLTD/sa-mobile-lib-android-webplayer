@@ -14,9 +14,13 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AbsListView;
+import android.widget.AbsoluteLayout;
+import android.widget.FrameLayout;
 
 public class SAWebPlayer extends Fragment implements SAWebPlayerEventInterface {
 
+    private FrameLayout holder = null;
     private SAWebView webView = null;
     private int contentWidth = 0;
     private int contentHeight = 0;
@@ -44,18 +48,26 @@ public class SAWebPlayer extends Fragment implements SAWebPlayerEventInterface {
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
-        if (webView == null) {
+        if (holder == null) {
+            holder = new FrameLayout(getActivity());
+            holder.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            holder.setClipChildren(false);
+            holder.setClipToPadding(false);
+
             webView = new SAWebView(getActivity());
             webView.setBackgroundColor(Color.TRANSPARENT);
             webView.eventListener = this;
             saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Prepared, null);
-        } else {
+        }
+        else {
+            holder.removeView(webView);
             if (container != null) {
-                container.removeView(webView);
+                container.removeView(holder);
             }
         }
 
         webView.setLayoutParams(new ViewGroup.LayoutParams(contentWidth, contentHeight));
+        holder.addView(webView);
 
         ViewTreeObserver observer = container.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -74,7 +86,7 @@ public class SAWebPlayer extends Fragment implements SAWebPlayerEventInterface {
             }
         });
 
-        return webView;
+        return holder;
     }
 
     private Rect mapSourceSizeIntoBoundingSize(float sourceW, float sourceH, float boundingW, float boundingH) {
@@ -100,6 +112,10 @@ public class SAWebPlayer extends Fragment implements SAWebPlayerEventInterface {
         if (webView != null) {
             webView.loadHTML(html);
         }
+    }
+
+    public FrameLayout getHolder () {
+        return holder;
     }
 
     public SAWebView getWebView () {
