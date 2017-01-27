@@ -82,18 +82,7 @@ public class SAWebPlayer extends Fragment {
         // on account of #setRetainInstance(true) in #onCreate, so just remove it from the
         // superview so that when return it's going to be re-added by Android
         else {
-
-            // get parent
-            ViewParent parent = webContainer.getParent();
-
-            // try removing the web container from its parent
-            if (parent instanceof FrameLayout) {
-                ((FrameLayout) parent).removeView(webContainer);
-            } else if (parent instanceof RelativeLayout) {
-                ((RelativeLayout) parent).removeView(webContainer);
-            } else if (parent instanceof LinearLayout) {
-                ((LinearLayout) parent).removeView(webContainer);
-            }
+            container.removeView(webContainer);
         }
 
         // return the web container
