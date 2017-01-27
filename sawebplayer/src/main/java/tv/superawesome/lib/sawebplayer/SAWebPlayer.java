@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +21,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import java.io.File;
-import java.io.FileOutputStream;
-
 public class SAWebPlayer extends Fragment {
 
     // private interface objects used for the web player callback mechanism
@@ -32,7 +28,12 @@ public class SAWebPlayer extends Fragment {
     private SAWebPlayerClickInterface clickListener;
 
     // only member variable, a SAWebContainer instance
-    private SAWebContainer webContainer;
+    private SAWebContainer            webContainer;
+
+    // member vars to hold data for when the fragment is actually put on screen
+    private int                       contentWidth = 0;
+    private int                       contentHeight = 0;
+    private String                    html = null;
 
     /**
      * Overridden Fragment "onCreate" method
@@ -60,9 +61,22 @@ public class SAWebPlayer extends Fragment {
         // if it's the first time the Fragment is being created, also create a web container
         // to return as view
         if (webContainer == null) {
+
+            // instantiate the web container
             webContainer = new SAWebContainer(getActivity());
+
+            // set it's size
             int match = ViewGroup.LayoutParams.MATCH_PARENT;
             webContainer.setLayoutParams(new FrameLayout.LayoutParams(match, match));
+
+            // if there are values in the content width & height, listeners, etc,
+            // set them here as well, when the web container is actually created
+            webContainer.setContentSize(contentWidth, contentHeight);
+            webContainer.setClickListener(clickListener);
+            webContainer.setEventListener(eventListener);
+
+            // load the html
+            webContainer.loadHTML(html);
         }
         // if the fragment is being recreated, the "webContainer" object should still be there
         // on account of #setRetainInstance(true) in #onCreate, so just remove it from the
@@ -94,11 +108,19 @@ public class SAWebPlayer extends Fragment {
      * @param height expected height
      */
     public void setContentSize (int width, int height) {
-        // set the size of the content to be rendered
-        webContainer.setContentSize(width, height);
-        // and set listener to be added to the SAWebView instance, when it's created
-        webContainer.setEventListener(eventListener);
-        webContainer.setClickListener(clickListener);
+
+        // capture the desired content width & height
+        contentWidth = width;
+        contentHeight = height;
+
+        // if the web container isn't null, update it's contents
+        if (webContainer != null) {
+            // set the size of the content to be rendered
+            webContainer.setContentSize(width, height);
+            // and set listener to be added to the SAWebView instance, when it's created
+            webContainer.setEventListener(eventListener);
+            webContainer.setClickListener(clickListener);
+        }
     }
 
     /**
@@ -108,7 +130,13 @@ public class SAWebPlayer extends Fragment {
      * @param html        the html to load
      */
     public void loadHTML(String html) {
-        webContainer.loadHTML(html);
+        // capture the desired html
+        this.html = html;
+
+        // if the web container is already created, re-load HTML
+        if (webContainer != null) {
+            webContainer.loadHTML(html);
+        }
     }
 
     /**
@@ -406,6 +434,10 @@ class SAWebView extends WebView {
      * @param html the html to load
      */
     public void loadHTML(String html) {
+
+        // if the HTML is null, just return by default and don't do anything
+        if (html == null) return;
+
         // replace HTML template parameters with their corresponding actual values,
         // before loading the final HTML into the web player
         String baseHtml = "<html><header><style>html, body, div { margin: 0px; padding: 0px; width: 100%; height: 100%; }</style></header><body>_CONTENT_</body></html>";
