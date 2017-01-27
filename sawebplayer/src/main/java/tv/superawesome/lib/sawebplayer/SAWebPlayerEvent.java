@@ -11,7 +11,8 @@ package tv.superawesome.lib.sawebplayer;
  */
 public enum SAWebPlayerEvent {
     Web_Prepared,
-    Web_Start,
+    Web_Loaded,
     Web_Error,
-    Web_Click
+    Web_Click,
+    Web_Started
 }

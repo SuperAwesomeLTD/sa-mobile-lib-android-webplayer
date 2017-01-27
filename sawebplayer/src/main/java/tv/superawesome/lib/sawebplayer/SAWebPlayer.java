@@ -48,7 +48,7 @@ public class SAWebPlayer extends Fragment implements SAWebPlayerEventInterface {
             webView = new SAWebView(getActivity());
             webView.setBackgroundColor(Color.TRANSPARENT);
             webView.eventListener = this;
-            this.saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Prepared, null);
+            saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Prepared, null);
         } else {
             if (container != null) {
                 container.removeView(webView);
@@ -104,6 +104,12 @@ public class SAWebPlayer extends Fragment implements SAWebPlayerEventInterface {
 
     public SAWebView getWebView () {
         return webView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Started, null);
     }
 
     /**
@@ -190,6 +196,6 @@ class SAWebView extends WebView {
         this.loadData(fullHtml, "text/html", "UTF-8");
 
         // call success listener
-        eventListener.saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Start, null);
+        eventListener.saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Loaded, null);
     }
 }
