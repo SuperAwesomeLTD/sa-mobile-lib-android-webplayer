@@ -75,6 +75,8 @@ public class SAWebPlayer extends Fragment implements SAWebPlayerEventInterface {
                 webView.setScaleY(sizes.bottom / (float) (contentHeight));
                 webView.setTranslationX(sizes.left);
                 webView.setTranslationY(sizes.top);
+
+                saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Layout, null);
             }
         });
 

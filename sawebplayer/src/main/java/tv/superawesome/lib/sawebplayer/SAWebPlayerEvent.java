@@ -14,5 +14,6 @@ public enum SAWebPlayerEvent {
     Web_Loaded,
     Web_Error,
     Web_Click,
-    Web_Started
+    Web_Started,
+    Web_Layout
 }
