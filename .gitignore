@@ -2,3 +2,6 @@ build/*
 wrapper/*
 .gradle/*
 local.properties
+sawebplayer/java_pid*
+java_pid*
+app/java_pid*
