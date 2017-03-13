@@ -5,11 +5,16 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#ffffffff"
     tools:context="superawesome.tv.sawebplayerdemoapp.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/MyBanner"
+        android:background="#00ff00"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -39,21 +44,63 @@
 
     </LinearLayout>
 
-
-
-    <FrameLayout
-        android:id="@+id/MyBanner"
-        android:background="#00ff00"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:clipChildren="false"
-        android:clipToPadding="false"/>
-    <FrameLayout
-        android:id="@+id/MyBanner2"
-        android:background="#ff0000"
+        android:layout_height="40dp">
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="M 1"
+            android:onClick="playMRAID1"/>
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="M 2"
+            android:onClick="playMRAID2"/>
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="M 3"
+            android:onClick="playMRAID3"/>
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="M 4"
+            android:onClick="playMRAID4"/>
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="M 5"
+            android:onClick="playMRAID5"/>
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"
-        android:clipToPadding="false"/>
+        android:clipToPadding="false">
+
+        <RelativeLayout
+            android:id="@+id/MyBanner2"
+            android:background="#ffff00"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"/>
+
+    </RelativeLayout>
 
 </LinearLayout>
