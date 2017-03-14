@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
         mraid1 = readFromFile(this, R.raw.mraid1);
         mraid2 = readFromFile(this, R.raw.mraid2);
         mraid3 = readFromFile(this, R.raw.mraid3);
-        mraid4 = readFromFile(this, R.raw.mradi4);
+        mraid4 = readFromFile(this, R.raw.mraid4);
 
         if (manager.findFragmentByTag(webPlayerTag) == null) {
             webPlayer = new SAWebPlayer();
@@ -129,6 +129,8 @@ public class MainActivity extends Activity {
             webPlayer.setEventListener(new SAWebPlayer.Listener() {
                 @Override
                 public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
+                    Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
+
                     if (event == SAWebPlayer.Event.Web_Prepared) {
                         webPlayer.loadHTML(mraid1);
                     }
@@ -146,6 +148,8 @@ public class MainActivity extends Activity {
             webPlayer.setEventListener(new SAWebPlayer.Listener() {
                 @Override
                 public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
+                    Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
+
                     if (event == SAWebPlayer.Event.Web_Prepared) {
                         webPlayer.loadHTML(mraid2);
                     }
@@ -163,6 +167,8 @@ public class MainActivity extends Activity {
             webPlayer2.setEventListener(new SAWebPlayer.Listener() {
                 @Override
                 public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
+                    Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
+
                     if (event == SAWebPlayer.Event.Web_Prepared) {
                         webPlayer2.loadHTML(mraid3);
                     }
@@ -180,6 +186,8 @@ public class MainActivity extends Activity {
             webPlayer.setEventListener(new SAWebPlayer.Listener() {
                 @Override
                 public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
+                    Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
+
                     if (event == SAWebPlayer.Event.Web_Prepared) {
                         webPlayer.loadHTML(mraid3);
                     }
@@ -197,6 +205,8 @@ public class MainActivity extends Activity {
             webPlayer2.setEventListener(new SAWebPlayer.Listener() {
                 @Override
                 public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
+                    Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
+
                     if (event == SAWebPlayer.Event.Web_Prepared) {
                         webPlayer2.loadHTML(mraid4);
                     }

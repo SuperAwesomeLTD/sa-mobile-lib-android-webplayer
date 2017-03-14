@@ -69,7 +69,7 @@ public class SAWebPlayer extends Fragment {
     private boolean     isResized = false;
     private int         holderWidth = ViewGroup.LayoutParams.MATCH_PARENT;
     private int         holderHeight = ViewGroup.LayoutParams.MATCH_PARENT;
-    private int         holderBgColor = Color.TRANSPARENT;
+    private int         holderBgColor = Color.CYAN;
 
     /**
      * Constructor
@@ -131,6 +131,9 @@ public class SAWebPlayer extends Fragment {
                 @Override
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
                     super.onPageStarted(view, url, favicon);
+                    if (shouldOverrideUrlLoading(view, url)) {
+                        view.stopLoading();
+                    }
                 }
 
                 @Override
@@ -145,6 +148,8 @@ public class SAWebPlayer extends Fragment {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
+                    //
+                    // MRAID Case
                     if (url.startsWith("mraid://")) {
 
                         Log.d("SuperAwesome", url);
@@ -197,6 +202,7 @@ public class SAWebPlayer extends Fragment {
                                 expandedPlayer.setEventListener(new Listener() {
                                     @Override
                                     public void saWebPlayerDidReceiveEvent(Event event, String destination) {
+
                                         if (event == SAWebPlayer.Event.Web_Prepared) {
                                             if (finalExtUrl != null) {
 
@@ -220,6 +226,8 @@ public class SAWebPlayer extends Fragment {
                                             } else {
                                                 expandedPlayer.loadHTML(html);
                                             }
+                                        } else {
+                                            eventListener.saWebPlayerDidReceiveEvent(event, destination);
                                         }
                                     }
                                 });
@@ -227,8 +235,14 @@ public class SAWebPlayer extends Fragment {
 
                                 break;
                             }
-                            case Open:
+                            case Open: {
+                                String gotoUrl = command.getParams().get("url");
+                                if (gotoUrl != null) {
+                                    gotoUrl = gotoUrl.replace("%3A", ":").replace("%2F", "/");
+                                }
+                                eventListener.saWebPlayerDidReceiveEvent(Event.Web_Click, gotoUrl);
                                 break;
+                            }
                             case PlayVideo:
                                 break;
                             case Resize: {
@@ -253,6 +267,8 @@ public class SAWebPlayer extends Fragment {
                                     public void saWebPlayerDidReceiveEvent(Event event, String destination) {
                                         if (event == SAWebPlayer.Event.Web_Prepared) {
                                             expandedPlayer.loadHTML(html);
+                                        } else {
+                                            eventListener.saWebPlayerDidReceiveEvent(event, destination);
                                         }
                                     }
                                 });
@@ -276,9 +292,18 @@ public class SAWebPlayer extends Fragment {
                                 break;
                             }
                         }
-                    }
 
-                    return true;
+
+                        return false;
+                    }
+                    else {
+                        if (finishedLoading) {
+                            eventListener.saWebPlayerDidReceiveEvent(Event.Web_Click, url);
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
                 }
             });
             webView.setWebChromeClient(new WebChromeClient() {
@@ -358,12 +383,11 @@ public class SAWebPlayer extends Fragment {
         if ((isExpanded || isResized) && mraid.getCloseButtonPosition() != SAMRAID.CloseButtonPosition.NONE ) {
             RelativeLayout closeButtonHolder = new RelativeLayout(getActivity());
             closeButtonHolder.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            webView.addView(closeButtonHolder);
+            holder.addView(closeButtonHolder);
 
             closeButton = new Button(getActivity());
-            float factor = SAUtils.getScaleFactor(getActivity());
-            int btnWidth = (int) SAWebAux.dipToPixels(getActivity(), 40);
-            int btnHeight = (int) SAWebAux.dipToPixels(getActivity(), 40);
+            int btnWidth = (int) SAWebAux.dipToPixels(getActivity(), 50);
+            int btnHeight = (int) SAWebAux.dipToPixels(getActivity(), 50);
             RelativeLayout.LayoutParams btnParams = new RelativeLayout.LayoutParams(btnWidth, btnHeight);
 
             switch (mraid.getCloseButtonPosition()) {
@@ -396,10 +420,8 @@ public class SAWebPlayer extends Fragment {
                     break;
             }
 
-            closeButton.setBackgroundColor(Color.RED);
-            closeButton.setText("X");
-//            closeButton.setBackgroundColor(isResized ? Color.TRANSPARENT : Color.RED);
-//            closeButton.setText(isResized ? "" : "X");
+            closeButton.setBackgroundColor(isResized ? Color.TRANSPARENT : Color.RED);
+            closeButton.setText(isResized ? "" : "X");
             closeButton.setTextColor(Color.WHITE);
             closeButton.setLayoutParams(btnParams);
             closeButton.setOnClickListener(new View.OnClickListener() {
@@ -425,7 +447,11 @@ public class SAWebPlayer extends Fragment {
                 @Override
                 public void onGlobalLayout() {
 
-                    webView.scale(contentWidth, contentHeight, holder.getMeasuredWidth(), holder.getMeasuredHeight());
+                    if (isResized) {
+                        webView.scaleSimple(holder.getMeasuredWidth(), holder.getMeasuredHeight());
+                    } else {
+                        webView.scale(contentWidth, contentHeight, holder.getMeasuredWidth(), holder.getMeasuredHeight());
+                    }
 
                     if (getActivity() != null && expandedPlayer != null && expandedPlayer.isResized) {
 
@@ -451,13 +477,12 @@ public class SAWebPlayer extends Fragment {
 
                         int wwYMiddle = loc[1] + (int) ((webView.getMeasuredHeight() * webView.getScaleY()) / 2.0F);
 
-                        // get up & down difference
-                        int downDiff = size.height - wwYMiddle;
-                        int upDiff = wwYMiddle;
+                        int bottomDif = size.height - wwYMiddle;
+                        int topDiff = wwYMiddle;
 
-                        int downMax = Math.min(downDiff, resizedHalfHeight);
-                        int upMax = Math.min(upDiff, resizedHalfHeight);
-                        upMax += downMax < resizedHalfHeight ? (resizedHalfHeight - downDiff) : 0;
+                        int downMax = Math.min(bottomDif, resizedHalfHeight);
+                        int upMax = Math.min(topDiff, resizedHalfHeight);
+                        upMax += downMax < resizedHalfHeight ? (resizedHalfHeight - bottomDif) : 0;
 
                         int resizedY = wwYMiddle - upMax;
                         resizedY -= wwYMiddle > size.height / 2.0F ? statusBarHeight : 0;
@@ -469,19 +494,14 @@ public class SAWebPlayer extends Fragment {
 
                         int wwXMiddle = loc[0] + (int) ((webView.getMeasuredWidth() * webView.getScaleX()) / 2.0F);
 
-                        // get left & right difference
                         int rightDiff = size.width - wwXMiddle;
                         int leftDiff = wwXMiddle;
-
-                        Log.d("SuperAwesome-X", "Screen: " + size.width + "; Middle: " + wwXMiddle + " RDif: " + rightDiff + " , " + leftDiff);
 
                         int rightMax = Math.min(rightDiff, resizedHalfWidth);
                         int leftMax = Math.min(leftDiff, resizedHalfWidth);
                         leftMax += rightMax < resizedHalfWidth ? (resizedHalfWidth - rightDiff) : 0;
 
                         int resizedX = wwXMiddle - leftMax;
-
-                        Log.d("SuperAwesome-X", "LMax: " + leftMax + ", RMax: " + rightMax + " FinalX: " + resizedX + " vs " + loc[0]);
 
                         expandedPlayer.holder.setTranslationX(resizedX);
                         expandedPlayer.holder.setTranslationY(resizedY);

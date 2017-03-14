@@ -42,6 +42,23 @@ public class SAWebView extends WebView {
         setTranslationY(sizes.top);
     }
 
+    public void scaleSimple (int toWidth, int toHeight) {
+
+        setPivotX(0);
+        setPivotY(0);
+
+        try {
+            setScaleX(toWidth / (float) getMeasuredWidth());
+        } catch (ArithmeticException e) {
+            //
+        }
+        try {
+            setScaleY(toHeight / (float) getMeasuredHeight());
+        } catch (ArithmeticException e) {
+            //
+        }
+    }
+
     public void loadHTML (String html) {
 
         String baseHtml = "<html><header><style>html, body, div { margin: 0px; padding: 0px; }</style></header><body>_CONTENT_</body></html>";
