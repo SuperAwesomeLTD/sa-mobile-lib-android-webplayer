@@ -2,6 +2,7 @@ package tv.superawesome.lib.sawebplayer;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
@@ -22,6 +23,7 @@ import tv.superawesome.lib.sautils.SAUtils;
 import tv.superawesome.lib.sawebplayer.aux.SAWebAux;
 import tv.superawesome.lib.sawebplayer.mraid.SAMRAID;
 import tv.superawesome.lib.sawebplayer.mraid.SAMRAIDCommand;
+import tv.superawesome.lib.sawebplayer.mraid.SAMRAIRVideoActivity;
 
 public class SAWebPlayer extends Fragment implements
         SAWebClient.Listener,
@@ -375,7 +377,11 @@ public class SAWebPlayer extends Fragment implements
 
     @Override
     public void playVideoCommand(String url) {
-        // do nothing
+        if (url != null) {
+            Intent intent = new Intent(getActivity(), SAMRAIRVideoActivity.class);
+            intent.putExtra("link_url", url);
+            getActivity().startActivity(intent);
+        }
     }
 
     @Override
@@ -466,7 +472,7 @@ public class SAWebPlayer extends Fragment implements
     public void onGlobalLayout() {
 
         if (isResized) {
-            webView.scaleSimple(holder.getMeasuredWidth(), holder.getMeasuredHeight());
+            webView.resize(holder.getMeasuredWidth(), holder.getMeasuredHeight());
         } else {
             webView.scale(contentWidth, contentHeight, holder.getMeasuredWidth(), holder.getMeasuredHeight());
         }

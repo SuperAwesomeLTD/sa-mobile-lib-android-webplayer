@@ -42,7 +42,7 @@ public class SAWebView extends WebView {
         setTranslationY(sizes.top);
     }
 
-    public void scaleSimple (int toWidth, int toHeight) {
+    public void resize (int toWidth, int toHeight) {
 
         setPivotX(0);
         setPivotY(0);
