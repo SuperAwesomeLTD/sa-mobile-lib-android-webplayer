@@ -1,100 +1,106 @@
 package tv.superawesome.lib.sawebplayer.mraid;
 
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class SAMRAIDCommand {
 
     public enum Command {
-        None {
-            @Override
-            public String toString() {
-                return "None";
-            }
-        },
-        Close {
-            @Override
-            public String toString() {
-                return "close";
-            }
-        },
-        CreateCalendarEvent {
-            @Override
-            public String toString() {
-                return "createCalendarEvent";
-            }
-        },
-        Expand {
-            @Override
-            public String toString() {
-                return "expand";
-            }
-        },
-        Open {
-            @Override
-            public String toString() {
-                return "open";
-            }
-        },
-        PlayVideo {
-            @Override
-            public String toString() {
-                return "playVideo";
-            }
-        },
-        Resize {
-            @Override
-            public String toString() {
-                return "resize";
-            }
-        },
-        SetOrientationProperties {
-            @Override
-            public String toString() {
-                return "setOrientationProperties";
-            }
-        },
-        SetResizeProperties {
-            @Override
-            public String toString() {
-                return "setResizeProperties";
-            }
-        },
-        StorePicture {
-            @Override
-            public String toString() {
-                return "storePicture";
-            }
-        },
-        UseCustomClose {
-            @Override
-            public String toString() {
-                return "useCustomClose";
-            }
-        };
+        None,
+        Close,
+        CreateCalendarEvent,
+        Expand,
+        Open,
+        PlayVideo,
+        Resize,
+        SetOrientationProperties,
+        SetResizeProperties,
+        StorePicture,
+        UseCustomClose;
 
         public static Command fromString (String command) {
-            switch (command) {
-                case "close":                    return Close;
-                case "createCalendarEvent":      return CreateCalendarEvent;
-                case "expand":                   return Expand;
-                case "open":                     return Open;
-                case "playVideo":                return PlayVideo;
-                case "resize":                   return Resize;
-                case "setOrientationProperties": return SetOrientationProperties;
-                case "setResizeProperties":      return SetResizeProperties;
-                case "storePicture":             return StorePicture;
-                case "useCustomClose":           return UseCustomClose;
+            if (command == null) {
+                return None;
+            } else {
+                switch (command) {
+                    case "close":
+                        return Close;
+                    case "createCalendarEvent":
+                        return CreateCalendarEvent;
+                    case "expand":
+                        return Expand;
+                    case "open":
+                        return Open;
+                    case "playVideo":
+                        return PlayVideo;
+                    case "resize":
+                        return Resize;
+                    case "setOrientationProperties":
+                        return SetOrientationProperties;
+                    case "setResizeProperties":
+                        return SetResizeProperties;
+                    case "storePicture":
+                        return StorePicture;
+                    case "useCustomClose":
+                        return UseCustomClose;
+                    default:
+                        return None;
+                }
             }
-            return None;
         }
     }
 
+    public enum CustomClosePosition {
+        None,
+        Top_Left,
+        Top_Right,
+        Center,
+        Bottom_Left,
+        Bottom_Right,
+        Top_Center,
+        Bottom_Center;
+
+        public static CustomClosePosition fromString (String btnPos) {
+            if (btnPos == null) {
+                return Top_Right;
+            } else {
+                switch (btnPos) {
+                    case "top-left":
+                        return Top_Left;
+                    case "top_right":
+                        return Top_Right;
+                    case "center":
+                        return Center;
+                    case "bottom-left":
+                        return Bottom_Left;
+                    case "bottom-right":
+                        return Bottom_Right;
+                    case "top-center":
+                        return Top_Center;
+                    case "bottom-center":
+                        return Bottom_Center;
+                    default:
+                        return Top_Right;
+                }
+            }
+        }
+    }
+
+    private Listener listener;
     private Command command;
     private Map<String, String> params = new HashMap<>();
-    private boolean valid = false;
 
-    public SAMRAIDCommand (String query) {
+    public SAMRAIDCommand () {
+        // do nothing
+    }
+
+    public boolean isMRAIDCommand (String query) {
+        return query.startsWith("mraid://");
+    }
+
+    public void getQuery (String query) {
 
         String[] parts = query.replace("mraid://", "").split("\\?");
 
@@ -115,7 +121,115 @@ public class SAMRAIDCommand {
                 }
                 if (checkParamsForCommand(command, lparams)) {
                     params = lparams;
-                    valid = true;
+                }
+            }
+
+            switch (command) {
+                case None:
+                    break;
+                case Close: {
+                    listener.closeCommand();
+                    break;
+                }
+                case CreateCalendarEvent: {
+                    listener.createCalendarEventCommand(null);
+                    break;
+                }
+                case Expand: {
+                    String url = params.get("url");
+                    if (url != null) {
+                        url = url.replace("%3A", ":").replace("%2F", "/");
+                    }
+                    listener.expandCommand(url);
+                    break;
+                }
+                case Open: {
+                    String url = params.get("url");
+                    if (url != null) {
+                        url = url.replace("%3A", ":").replace("%2F", "/");
+                    }
+                    listener.openCommand(url);
+                    break;
+                }
+                case PlayVideo: {
+                    String url = params.get("url");
+                    if (url != null) {
+                        url = url.replace("%3A", ":").replace("%2F", "/");
+                    }
+                    listener.playVideoCommand(url);
+                    break;
+                }
+                case Resize: {
+                    listener.resizeCommand();
+                    break;
+                }
+                case SetOrientationProperties: {
+                    listener.setOrientationPropertiesCommand(false, false);
+                    break;
+                }
+                case SetResizeProperties: {
+
+                    String width = params.get("width");
+                    int iWidth = 0;
+                    try {
+                        iWidth = Integer.parseInt(width);
+                    } catch (Exception e) {
+                        //
+                    }
+
+                    String height = params.get("height");
+                    int iHeight = 0;
+                    try {
+                        iHeight = Integer.parseInt(height);
+                    } catch (Exception e) {
+                        //
+                    }
+
+                    String offsetX = params.get("offsetX");
+                    int iOffsetX = 0;
+                    try {
+                        iOffsetX = Integer.parseInt(offsetX);
+                    } catch (Exception e) {
+                        //
+                    }
+
+                    String offsetY = params.get("offsetY");
+                    int iOffsetY = 0;
+                    try {
+                        iOffsetY = Integer.parseInt(offsetY);
+                    } catch (Exception e) {
+                        //
+                    }
+
+                    String allowOffscreen = params.get("allowOffscreen");
+                    boolean bAllowOffscreen = false;
+                    try {
+                        bAllowOffscreen = Boolean.parseBoolean(allowOffscreen);
+                    } catch (Exception e) {
+                        //
+                    }
+
+                    String customClosePosition = params.get("customClosePosition");
+                    if (customClosePosition == null) {
+                        customClosePosition = params.get("expandedCustomClosePosition");
+                    }
+                    CustomClosePosition eCustomClosePosition = CustomClosePosition.fromString(customClosePosition);
+
+                    listener.setResizePropertiesCommand(iWidth, iHeight, iOffsetX, iOffsetY, eCustomClosePosition, bAllowOffscreen);
+
+                    break;
+                }
+                case StorePicture: {
+                    String url = params.get("url");
+                    if (url != null) {
+                        url = url.replace("%3A", ":").replace("%2F", "/");
+                    }
+                    listener.storePictureCommand(url);
+                    break;
+                }
+                case UseCustomClose: {
+                    listener.useCustomCloseCommand(true);
+                    break;
                 }
             }
 
@@ -147,7 +261,8 @@ public class SAMRAIDCommand {
                         params.containsKey("height") &&
                         params.containsKey("offsetX") &&
                         params.containsKey("offsetY") &&
-                        params.containsKey("customClosePosition") &&
+                        (params.containsKey("customClosePosition") ||
+                        params.containsKey("expandedCustomClosePosition")) &&
                         params.containsKey("allowOffscreen");
         }
 
@@ -162,7 +277,21 @@ public class SAMRAIDCommand {
         return params;
     }
 
-    public boolean isValid() {
-        return valid;
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    public interface Listener {
+        void closeCommand ();
+        void expandCommand (String url);
+        void resizeCommand ();
+        void useCustomCloseCommand (boolean useCustomClose);
+        void createCalendarEventCommand (String eventJSON);
+        void openCommand (String url);
+        void playVideoCommand (String url);
+        void storePictureCommand (String url);
+        void setOrientationPropertiesCommand (boolean allowOrientationChange, boolean forceOrientation);
+        void setResizePropertiesCommand (int width, int height, int offsetX, int offestY, CustomClosePosition customClosePosition, boolean allowOffscreen);
+
     }
 }
