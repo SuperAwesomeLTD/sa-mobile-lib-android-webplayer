@@ -107,7 +107,7 @@ public class MainActivity extends Activity {
     }
 
     public void playAd3 (View v) {
-        final String rich2 = "<iframe style='padding:0;border:0;' width='100%' height='100%' src='https://s3-eu-west-1.amazonaws.com/sb-ads-uploads/rich-media/npgSkbFMPznR1uqJhOGjkqzuWFiekbfO/normal/index.html'/>";
+        final String rich2 = "<iframe style='padding:0;border:0;' width='100%' height='100%' src='https://s3-eu-west-1.amazonaws.com/sb-ads-uploads/rich-media/H1KI1dTnKhSPLDAbLtpN7zgqTOO9qNsO/Ooshies/index.html'/>";
 
         if (webPlayer2 != null) {
             getFragmentManager().beginTransaction().remove(webPlayer2).commit();
