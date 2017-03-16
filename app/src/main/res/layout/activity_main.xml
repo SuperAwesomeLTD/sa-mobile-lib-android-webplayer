@@ -49,6 +49,13 @@
             android:text="Play 4"
             android:onClick="playAd4"/>
 
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="Play 5"
+            android:onClick="playAd5"/>
+
     </LinearLayout>
 
     <LinearLayout
