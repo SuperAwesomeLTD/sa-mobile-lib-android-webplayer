@@ -67,7 +67,7 @@ public class SAWebPlayer extends Fragment implements
     private boolean     isResized = false;
     private int         holderWidth = ViewGroup.LayoutParams.MATCH_PARENT;
     private int         holderHeight = ViewGroup.LayoutParams.MATCH_PARENT;
-    private int         holderBgColor = Color.CYAN;
+    private int         holderBgColor = Color.TRANSPARENT;
 
     /**
      * Constructor

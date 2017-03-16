@@ -26,6 +26,7 @@ public class MainActivity extends Activity {
     private String ad1;
     private String ad2;
     private String ad3;
+    private String ad4;
     private String mraid1;
     private String mraid2;
     private String mraid3;
@@ -41,6 +42,7 @@ public class MainActivity extends Activity {
         ad1 = readFromFile(this, R.raw.ad1);
         ad2 = readFromFile(this, R.raw.ad2);
         ad3 = readFromFile(this, R.raw.ad3);
+        ad4 = readFromFile(this, R.raw.ad4);
         mraid1 = readFromFile(this, R.raw.mraid1);
         mraid2 = readFromFile(this, R.raw.mraid2);
         mraid3 = readFromFile(this, R.raw.mraid3);
@@ -113,6 +115,26 @@ public class MainActivity extends Activity {
 
                     if (event == SAWebPlayer.Event.Web_Prepared) {
                         webPlayer2.loadHTML(ad3);
+                    }
+
+                }
+            });
+            manager.beginTransaction().add(R.id.MyBanner2, webPlayer2, webPlayer2Tag).commit();
+        }
+    }
+
+    public void playAd4 (View v) {
+        if (webPlayer2 != null) {
+            manager.beginTransaction().remove(webPlayer2).commit();
+            webPlayer2 = new SAWebPlayer();
+            webPlayer2.setContentSize(320, 480);
+            webPlayer2.setEventListener(new SAWebPlayer.Listener() {
+                @Override
+                public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
+                    Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
+
+                    if (event == SAWebPlayer.Event.Web_Prepared) {
+                        webPlayer2.loadHTML(ad4);
                     }
 
                 }
