@@ -10,7 +10,7 @@
 
     <FrameLayout
         android:id="@+id/MyBanner"
-        android:background="#00ff00"
+        android:background="#0000ff00"
         android:layout_width="200dp"
         android:layout_height="100dp"
         android:clipChildren="false"
@@ -101,7 +101,7 @@
 
 
     <RelativeLayout
-        android:gravity="center"
+        android:gravity="bottom|center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"
@@ -109,9 +109,9 @@
 
         <RelativeLayout
             android:id="@+id/MyBanner2"
-            android:background="#ffff00"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:background="#00ffff00"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
             android:clipChildren="false"
             android:clipToPadding="false"/>
 

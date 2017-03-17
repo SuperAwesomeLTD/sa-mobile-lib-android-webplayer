@@ -3,6 +3,8 @@ package superawesome.tv.sawebplayerdemoapp;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -178,6 +180,9 @@ public class MainActivity extends Activity {
                     if (event == SAWebPlayer.Event.Web_Prepared) {
                         webPlayer.loadHTML(mraid1);
                     }
+                    else if (event == SAWebPlayer.Event.Web_Click) {
+                        MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(destination)));
+                    }
                 }
             });
             manager.beginTransaction().add(R.id.MyBanner, webPlayer, webPlayerTag).commit();
@@ -196,6 +201,9 @@ public class MainActivity extends Activity {
 
                     if (event == SAWebPlayer.Event.Web_Prepared) {
                         webPlayer.loadHTML(mraid2);
+                    }
+                    else if (event == SAWebPlayer.Event.Web_Click) {
+                        MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(destination)));
                     }
                 }
             });
@@ -216,6 +224,9 @@ public class MainActivity extends Activity {
                     if (event == SAWebPlayer.Event.Web_Prepared) {
                         webPlayer2.loadHTML(mraid3);
                     }
+                    else if (event == SAWebPlayer.Event.Web_Click) {
+                        MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(destination)));
+                    }
                 }
             });
             manager.beginTransaction().add(R.id.MyBanner2, webPlayer2, webPlayer2Tag).commit();
@@ -235,6 +246,9 @@ public class MainActivity extends Activity {
                     if (event == SAWebPlayer.Event.Web_Prepared) {
                         webPlayer.loadHTML(mraid3);
                     }
+                    else if (event == SAWebPlayer.Event.Web_Click) {
+                        MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(destination)));
+                    }
                 }
             });
             manager.beginTransaction().add(R.id.MyBanner, webPlayer, webPlayerTag).commit();
@@ -253,6 +267,9 @@ public class MainActivity extends Activity {
 
                     if (event == SAWebPlayer.Event.Web_Prepared) {
                         webPlayer2.loadHTML(mraid4);
+                    }
+                    else if (event == SAWebPlayer.Event.Web_Click) {
+                        MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(destination)));
                     }
                 }
             });
