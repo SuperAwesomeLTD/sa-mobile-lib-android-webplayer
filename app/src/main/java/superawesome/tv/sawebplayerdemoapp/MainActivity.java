@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
                     Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
                     if (event == SAWebPlayerEvent.Web_Prepared) {
-                        webPlayer.loadHTML(img);
+                        webPlayer.loadHTML("https://ads.superawesome.tv", img);
                     }
                     if (event == SAWebPlayerEvent.Web_Layout) {
                         Log.d("SuperAwesome", "Pos " + webPlayer.getWebView().getTranslationX() + ", " + webPlayer.getWebView().getTranslationY());
@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
                     Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
                     if (event == SAWebPlayerEvent.Web_Prepared) {
-                        webPlayer.loadHTML(img);
+                        webPlayer.loadHTML("https://ads.superawesome.tv", img);
                     }
                     if (event == SAWebPlayerEvent.Web_Layout) {
                         Log.d("SuperAwesome", "Pos " + webPlayer.getWebView().getTranslationX() + ", " + webPlayer.getWebView().getTranslationY());
@@ -94,7 +94,7 @@ public class MainActivity extends Activity {
                     Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
                     if (event == SAWebPlayerEvent.Web_Prepared) {
-                        webPlayer.loadHTML(tag);
+                        webPlayer.loadHTML("https://ads.superawesome.tv", tag);
                     }
                     if (event == SAWebPlayerEvent.Web_Layout) {
                         Log.d("SuperAwesome", "Pos " + webPlayer.getWebView().getTranslationX() + ", " + webPlayer.getWebView().getTranslationY());
@@ -119,7 +119,7 @@ public class MainActivity extends Activity {
                     Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
                     if (event == SAWebPlayerEvent.Web_Prepared) {
-                        webPlayer2.loadHTML(rich2);
+                        webPlayer2.loadHTML("https://s3-eu-west-1.amazonaws.com", rich2);
                     }
 
                 }

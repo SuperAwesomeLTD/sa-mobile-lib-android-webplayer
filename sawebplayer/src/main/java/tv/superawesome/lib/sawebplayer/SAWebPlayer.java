@@ -180,7 +180,7 @@ public class SAWebPlayer extends Fragment {
      *
      * @param html the html to load
      */
-    public void loadHTML (String html) {
+    public void loadHTML (String base, String html) {
         if (webView != null) {
 
             // if the HTML is null, just return by default and don't do anything
@@ -192,7 +192,7 @@ public class SAWebPlayer extends Fragment {
             String fullHtml = baseHtml.replace("_CONTENT_", html);
 
             // load data directly, not from file as before
-            webView.loadData(fullHtml, "text/html", "UTF-8");
+            webView.loadDataWithBaseURL(base, fullHtml, "text/html", "UTF-8", null);
 
             // call success listener
             eventListener.saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Loaded, null);
