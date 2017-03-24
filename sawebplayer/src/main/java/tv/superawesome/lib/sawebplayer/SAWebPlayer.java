@@ -121,26 +121,28 @@ public class SAWebPlayer extends Fragment {
         webView.setLayoutParams(new ViewGroup.LayoutParams(contentWidth, contentHeight));
         holder.addView(webView);
 
-        ViewTreeObserver observer = container.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
+        if (container != null) {
+            ViewTreeObserver observer = container.getViewTreeObserver();
+            observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
 
-                // create sizes for the scaled view
-                Rect sizes = mapSourceSizeIntoBoundingSize(contentWidth, contentHeight, container.getMeasuredWidth(), container.getMeasuredHeight());
+                    // create sizes for the scaled view
+                    Rect sizes = mapSourceSizeIntoBoundingSize(contentWidth, contentHeight, container.getMeasuredWidth(), container.getMeasuredHeight());
 
-                webView.setPivotX(0);
-                webView.setPivotY(0);
-                webView.setScaleX(sizes.right / (float) (contentWidth));
-                webView.setScaleY(sizes.bottom / (float) (contentHeight));
-                webView.setTranslationX(sizes.left);
-                webView.setTranslationY(sizes.top);
+                    webView.setPivotX(0);
+                    webView.setPivotY(0);
+                    webView.setScaleX(sizes.right / (float) (contentWidth));
+                    webView.setScaleY(sizes.bottom / (float) (contentHeight));
+                    webView.setTranslationX(sizes.left);
+                    webView.setTranslationY(sizes.top);
 
-                // send event
-                eventListener.saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Layout, null);
+                    // send event
+                    eventListener.saWebPlayerDidReceiveEvent(SAWebPlayerEvent.Web_Layout, null);
 
-            }
-        });
+                }
+            });
+        }
 
         return holder;
     }
