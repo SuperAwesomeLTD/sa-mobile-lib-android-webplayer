@@ -29,10 +29,6 @@ public class SAWebClient extends WebViewClient {
         return listener.shouldOverrideUrlLoading(view, url);
     }
 
-    void setListener(Listener listener) {
-        this.listener = listener;
-    }
-
     interface Listener {
         void onPageStarted (WebView view, String url);
         void onPageFinished (WebView view);

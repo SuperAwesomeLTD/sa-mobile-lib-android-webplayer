@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MediaController;
@@ -17,7 +16,7 @@ import android.widget.VideoView;
 import tv.superawesome.lib.sautils.SAImageUtils;
 import tv.superawesome.lib.sautils.SAUtils;
 
-public class SAMRAIRVideoActivity extends Activity {
+public class SAMRAIDVideoActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,7 @@ public class SAMRAIRVideoActivity extends Activity {
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SAMRAIRVideoActivity.super.onBackPressed();
+                SAMRAIDVideoActivity.super.onBackPressed();
             }
         });
 

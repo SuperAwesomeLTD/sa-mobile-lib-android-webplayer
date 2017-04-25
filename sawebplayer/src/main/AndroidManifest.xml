@@ -7,7 +7,7 @@
         android:supportsRtl="true">
 
         <activity
-            android:name=".mraid.SAMRAIRVideoActivity"
+            android:name=".mraid.SAMRAIDVideoActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
 

@@ -1,7 +1,5 @@
 package tv.superawesome.lib.sawebplayer.mraid;
 
-import android.util.Log;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +51,7 @@ public class SAMRAIDCommand {
     }
 
     public enum CustomClosePosition {
-        None,
+        Unavailable,
         Top_Left,
         Top_Right,
         Center,
@@ -69,7 +67,7 @@ public class SAMRAIDCommand {
                 switch (btnPos) {
                     case "top-left":
                         return Top_Left;
-                    case "top_right":
+                    case "top-right":
                         return Top_Right;
                     case "center":
                         return Center;
@@ -159,6 +157,14 @@ public class SAMRAIDCommand {
                     listener.playVideoCommand(url);
                     break;
                 }
+                case StorePicture: {
+                    String url = params.get("url");
+                    if (url != null) {
+                        url = url.replace("%3A", ":").replace("%2F", "/");
+                    }
+                    listener.storePictureCommand(url);
+                    break;
+                }
                 case Resize: {
                     listener.resizeCommand();
                     break;
@@ -219,14 +225,6 @@ public class SAMRAIDCommand {
 
                     break;
                 }
-                case StorePicture: {
-                    String url = params.get("url");
-                    if (url != null) {
-                        url = url.replace("%3A", ":").replace("%2F", "/");
-                    }
-                    listener.storePictureCommand(url);
-                    break;
-                }
                 case UseCustomClose: {
                     listener.useCustomCloseCommand(true);
                     break;
@@ -267,14 +265,6 @@ public class SAMRAIDCommand {
         }
 
         return false;
-    }
-
-    public Command getCommand() {
-        return command;
-    }
-
-    public Map<String, String> getParams() {
-        return params;
     }
 
     public void setListener(Listener listener) {

@@ -23,7 +23,7 @@ import tv.superawesome.lib.sautils.SAUtils;
 import tv.superawesome.lib.sawebplayer.aux.SAWebAux;
 import tv.superawesome.lib.sawebplayer.mraid.SAMRAID;
 import tv.superawesome.lib.sawebplayer.mraid.SAMRAIDCommand;
-import tv.superawesome.lib.sawebplayer.mraid.SAMRAIRVideoActivity;
+import tv.superawesome.lib.sawebplayer.mraid.SAMRAIDVideoActivity;
 
 public class SAWebPlayer extends Fragment implements
         SAWebClient.Listener,
@@ -141,7 +141,7 @@ public class SAWebPlayer extends Fragment implements
         holder.addView(webView);
 
         // do this only for the Resized / Expanded web player
-        if ((isExpanded || isResized) && mraid.getExpandedCustomClosePosition() != SAMRAIDCommand.CustomClosePosition.None ) {
+        if ((isExpanded || isResized) && mraid.getExpandedCustomClosePosition() != SAMRAIDCommand.CustomClosePosition.Unavailable) {
             RelativeLayout closeButtonHolder = new RelativeLayout(getActivity());
             closeButtonHolder.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             holder.addView(closeButtonHolder);
@@ -152,7 +152,7 @@ public class SAWebPlayer extends Fragment implements
             RelativeLayout.LayoutParams btnParams = new RelativeLayout.LayoutParams(btnWidth, btnHeight);
 
             switch (mraid.getExpandedCustomClosePosition()) {
-                case None:
+                case Unavailable:
                     break;
                 case Top_Left:
                     btnParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
@@ -228,6 +228,8 @@ public class SAWebPlayer extends Fragment implements
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView webView, String url) {
+
+        Log.d("SuperAwesome", "URL is " + url);
 
         SAMRAIDCommand command = new SAMRAIDCommand();
         boolean isMraid = command.isMRAIDCommand(url);
@@ -358,7 +360,7 @@ public class SAWebPlayer extends Fragment implements
     @Override
     public void useCustomCloseCommand(boolean useCustomClose) {
 
-        mraid.setExpandedCustomClosePosition(SAMRAIDCommand.CustomClosePosition.None);
+        mraid.setExpandedCustomClosePosition(SAMRAIDCommand.CustomClosePosition.Unavailable);
         if (expandedPlayer != null && expandedPlayer.closeButton != null) {
             expandedPlayer.closeButton.setVisibility(View.GONE);
         }
@@ -378,7 +380,7 @@ public class SAWebPlayer extends Fragment implements
     @Override
     public void playVideoCommand(String url) {
         if (url != null) {
-            Intent intent = new Intent(getActivity(), SAMRAIRVideoActivity.class);
+            Intent intent = new Intent(getActivity(), SAMRAIDVideoActivity.class);
             intent.putExtra("link_url", url);
             getActivity().startActivity(intent);
         }
