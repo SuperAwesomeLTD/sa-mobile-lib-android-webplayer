@@ -134,34 +134,22 @@ public class SAMRAIDCommand {
                     break;
                 }
                 case Expand: {
-                    String url = params.get("url");
-                    if (url != null) {
-                        url = url.replace("%3A", ":").replace("%2F", "/");
-                    }
+                    String url = parseUrl(params.get("url"));
                     listener.expandCommand(url);
                     break;
                 }
                 case Open: {
-                    String url = params.get("url");
-                    if (url != null) {
-                        url = url.replace("%3A", ":").replace("%2F", "/");
-                    }
+                    String url = parseUrl(params.get("url"));
                     listener.openCommand(url);
                     break;
                 }
                 case PlayVideo: {
-                    String url = params.get("url");
-                    if (url != null) {
-                        url = url.replace("%3A", ":").replace("%2F", "/");
-                    }
+                    String url = parseUrl(params.get("url"));
                     listener.playVideoCommand(url);
                     break;
                 }
                 case StorePicture: {
-                    String url = params.get("url");
-                    if (url != null) {
-                        url = url.replace("%3A", ":").replace("%2F", "/");
-                    }
+                    String url = parseUrl(params.get("url"));
                     listener.storePictureCommand(url);
                     break;
                 }
@@ -265,6 +253,17 @@ public class SAMRAIDCommand {
         }
 
         return false;
+    }
+
+    private String parseUrl (String url) {
+        return url == null ? null :
+                url.replace("%3A", ":")
+                .replace("%2F", "/")
+                .replace("%2B", "+")
+                .replace("%3F", "?")
+                .replace("%26", "&")
+                .replace("%3D", "=")
+                .replace("%2C", ",");
     }
 
     public void setListener(Listener listener) {
