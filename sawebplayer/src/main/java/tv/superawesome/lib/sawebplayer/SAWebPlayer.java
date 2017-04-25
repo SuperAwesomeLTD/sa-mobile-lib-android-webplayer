@@ -242,10 +242,11 @@ public class SAWebPlayer extends Fragment implements
             return false;
         } else {
 
-            if (finishedLoading && url != null && !url.equals("about:blank")) {
+            if (finishedLoading) {
                 eventListener.saWebPlayerDidReceiveEvent(Event.Web_Click, url);
                 return true;
-            } else {
+            }
+            else {
                 return false;
             }
 
