@@ -2,6 +2,7 @@ package tv.superawesome.lib.sawebplayer.aux;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 
 import java.io.IOException;

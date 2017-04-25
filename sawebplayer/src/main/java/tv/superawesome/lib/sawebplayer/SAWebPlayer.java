@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,11 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import tv.superawesome.lib.sautils.SAUtils;
 import tv.superawesome.lib.sawebplayer.aux.SAWebAux;
@@ -44,30 +40,28 @@ public class SAWebPlayer extends Fragment implements
     }
 
     // boolean holding whether the web view has finished loading or not
-    private boolean finishedLoading = false;
+    private boolean             finishedLoading = false;
 
     // private variables for the web player
-    private FrameLayout holder = null;
-    private SAWebView   webView = null;
-    private SAWebPlayer expandedPlayer = null;
-    private Button      closeButton = null;
+    protected FrameLayout       holder = null;
+    protected SAWebView         webView = null;
+    private SAExpandedWebPlayer expandedWebPlayer = null;
+    private SAResizedWebPlayer  resizedWebPlayer = null;
 
-    private int         origContentWidth = 0;
-    private int         origContentHeight = 0;
-    private int         contentWidth = 0;
-    private int         contentHeight = 0;
+    protected int               origContentWidth = 0;
+    protected int               origContentHeight = 0;
+    protected int               contentWidth = 0;
+    protected int               contentHeight = 0;
 
     // interface objects used for the web player callback mechanism
-    private Listener    eventListener;
+    protected Listener          eventListener;
 
     // mraid instance
-    private SAMRAID     mraid;
-    private String      html;
-    private boolean     isExpanded = false;
-    private boolean     isResized = false;
-    private int         holderWidth = ViewGroup.LayoutParams.MATCH_PARENT;
-    private int         holderHeight = ViewGroup.LayoutParams.MATCH_PARENT;
-    private int         holderBgColor = Color.TRANSPARENT;
+    protected SAMRAID           mraid;
+    private String              html;
+    protected int               holderWidth = ViewGroup.LayoutParams.MATCH_PARENT;
+    protected int               holderHeight = ViewGroup.LayoutParams.MATCH_PARENT;
+    protected int               holderBgColor = Color.TRANSPARENT;
 
     /**
      * Constructor
@@ -104,9 +98,16 @@ public class SAWebPlayer extends Fragment implements
     public void onDestroy() {
         super.onDestroy();
         FragmentManager manager = getFragmentManager();
-        if (expandedPlayer != null) {
+        if (expandedWebPlayer != null) {
             try {
-                manager.beginTransaction().remove(expandedPlayer).commit();
+                manager.beginTransaction().remove(expandedWebPlayer).commit();
+            } catch (Exception e) {
+                // do nothing
+            }
+        }
+        if (resizedWebPlayer != null) {
+            try {
+                manager.beginTransaction().remove(resizedWebPlayer).commit();
             } catch (Exception e) {
                 // do nothing
             }
@@ -139,68 +140,6 @@ public class SAWebPlayer extends Fragment implements
 
         webView.setLayoutParams(new ViewGroup.LayoutParams(contentWidth, contentHeight));
         holder.addView(webView);
-
-        // do this only for the Resized / Expanded web player
-        if ((isExpanded || isResized) && mraid.getExpandedCustomClosePosition() != SAMRAIDCommand.CustomClosePosition.Unavailable) {
-            RelativeLayout closeButtonHolder = new RelativeLayout(getActivity());
-            closeButtonHolder.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            holder.addView(closeButtonHolder);
-
-            closeButton = new Button(getActivity());
-            int btnWidth = (int) SAWebAux.dipToPixels(getActivity(), 50);
-            int btnHeight = (int) SAWebAux.dipToPixels(getActivity(), 50);
-            RelativeLayout.LayoutParams btnParams = new RelativeLayout.LayoutParams(btnWidth, btnHeight);
-
-            switch (mraid.getExpandedCustomClosePosition()) {
-                case Unavailable:
-                    break;
-                case Top_Left:
-                    btnParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-                    break;
-                case Top_Right:
-                    btnParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-                    break;
-                case Center:
-                    btnParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-                    break;
-                case Bottom_Left:
-                    btnParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-                    btnParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-                    break;
-                case Bottom_Right:
-                    btnParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-                    btnParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-                    break;
-                case Top_Center:
-                    btnParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-                    btnParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-                    break;
-                case Bottom_Center:
-                    btnParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-                    btnParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-                    break;
-            }
-
-            closeButton.setBackgroundColor(isResized ? Color.TRANSPARENT : Color.RED);
-            closeButton.setText(isResized ? "" : "X");
-            closeButton.setTextColor(Color.WHITE);
-            closeButton.setLayoutParams(btnParams);
-            closeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    FragmentManager manager = getFragmentManager();
-                    if (manager != null) {
-                        try {
-                            manager.beginTransaction().remove(SAWebPlayer.this).commit();
-                        } catch (Exception e) {
-                            // do nothing
-                        }
-                    }
-                }
-            });
-            closeButtonHolder.addView(closeButton);
-        }
 
         if (container != null) {
             container.getViewTreeObserver().addOnGlobalLayoutListener(this);
@@ -287,16 +226,19 @@ public class SAWebPlayer extends Fragment implements
         }
 
         FragmentManager manager = getFragmentManager();
-        expandedPlayer = new SAWebPlayer();
-        expandedPlayer.setContentSize(width, height);
-        expandedPlayer.isExpanded = true;
-        expandedPlayer.holderBgColor = Color.BLACK;
-        expandedPlayer.mraid.setExpandedCustomClosePosition(mraid.getExpandedCustomClosePosition());
-        expandedPlayer.setEventListener(new Listener() {
+
+        expandedWebPlayer = new SAExpandedWebPlayer();
+        expandedWebPlayer.holderBgColor = Color.BLACK;
+        expandedWebPlayer.setContentSize(width, height);
+        expandedWebPlayer.mraid.setExpandedCustomClosePosition(mraid.getExpandedCustomClosePosition());
+        expandedWebPlayer.setEventListener(new Listener() {
             @Override
             public void saWebPlayerDidReceiveEvent(Event event, String destination) {
 
                 if (event == SAWebPlayer.Event.Web_Prepared) {
+
+                    expandedWebPlayer.setEventListener(eventListener);
+
                     if (url != null) {
 
                         (new Thread(new Runnable() {
@@ -308,7 +250,7 @@ public class SAWebPlayer extends Fragment implements
                                     getActivity().runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            expandedPlayer.loadHTML(contents);
+                                            expandedWebPlayer.loadHTML(contents);
                                         }
                                     });
                                 }
@@ -317,15 +259,12 @@ public class SAWebPlayer extends Fragment implements
                         })).start();
 
                     } else {
-                        expandedPlayer.loadHTML(html);
+                        expandedWebPlayer.loadHTML(html);
                     }
-                } else {
-                    eventListener.saWebPlayerDidReceiveEvent(event, destination);
                 }
             }
         });
-        manager.beginTransaction().add(android.R.id.content, expandedPlayer, kEXPANDED_PLAYER).commit();
-
+        manager.beginTransaction().add(android.R.id.content, expandedWebPlayer, kEXPANDED_PLAYER).commit();
     }
 
     @Override
@@ -338,34 +277,29 @@ public class SAWebPlayer extends Fragment implements
         int resizedHeight = (int) (mraid.getExpandedHeight() * postScaleY);
 
         FragmentManager manager = getFragmentManager();
-        expandedPlayer = new SAWebPlayer();
-        expandedPlayer.isResized = true;
-        expandedPlayer.holderWidth = resizedWidth;
-        expandedPlayer.holderHeight = resizedHeight;
-        expandedPlayer.mraid.setExpandedCustomClosePosition(mraid.getExpandedCustomClosePosition());
-        expandedPlayer.setContentSize(mraid.getExpandedWidth(), mraid.getExpandedHeight());
-        expandedPlayer.setEventListener(new Listener() {
+
+        resizedWebPlayer = new SAResizedWebPlayer();
+        resizedWebPlayer.holderWidth = resizedWidth;
+        resizedWebPlayer.holderHeight = resizedHeight;
+        resizedWebPlayer.mraid.setExpandedCustomClosePosition(mraid.getExpandedCustomClosePosition());
+        resizedWebPlayer.setContentSize(mraid.getExpandedWidth(), mraid.getExpandedHeight());
+        resizedWebPlayer.parentWebView = webView;
+        resizedWebPlayer.parent = this;
+        resizedWebPlayer.setEventListener(new Listener() {
             @Override
             public void saWebPlayerDidReceiveEvent(Event event, String destination) {
                 if (event == SAWebPlayer.Event.Web_Prepared) {
-                    expandedPlayer.loadHTML(html);
-                } else {
-                    eventListener.saWebPlayerDidReceiveEvent(event, destination);
+                    resizedWebPlayer.setEventListener(eventListener);
+                    resizedWebPlayer.loadHTML(html);
                 }
             }
         });
-        manager.beginTransaction().add(android.R.id.content, expandedPlayer, kEXPANDED_PLAYER).commit();
-
+        manager.beginTransaction().add(android.R.id.content, resizedWebPlayer, kEXPANDED_PLAYER).commit();
     }
 
     @Override
     public void useCustomCloseCommand(boolean useCustomClose) {
-
         mraid.setExpandedCustomClosePosition(SAMRAIDCommand.CustomClosePosition.Unavailable);
-        if (expandedPlayer != null && expandedPlayer.closeButton != null) {
-            expandedPlayer.closeButton.setVisibility(View.GONE);
-        }
-
     }
 
     @Override
@@ -399,9 +333,7 @@ public class SAWebPlayer extends Fragment implements
 
     @Override
     public void setResizePropertiesCommand(int width, int height, int offsetX, int offestY, SAMRAIDCommand.CustomClosePosition customClosePosition, boolean allowOffscreen) {
-
         mraid.setResizeProperties(width, height, offsetX, offestY, customClosePosition, allowOffscreen);
-
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -429,21 +361,11 @@ public class SAWebPlayer extends Fragment implements
                 mraid.setMaxSize(screen.width, screen.height);
                 mraid.setCurrentPosition(contentWidth, contentHeight);
                 mraid.setDefaultPosition(contentWidth, contentHeight);
-                if (isResized) {
-                    mraid.setStateToResized();
-                } else if (isExpanded) {
-                    float scale = SAUtils.getScaleFactor(getActivity());
-                    int width = (int) (screen.width / scale);
-                    int height = (int) (screen.height / scale);
-                    mraid.setStateToExpanded();
-                    mraid.setCurrentPosition(width, height - 1);
-                } else {
-                    mraid.setStateToDefault();
-                }
+                mraid.setStateToDefault();
                 mraid.setReady();
                 mraid.setViewableTrue();
 
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT && !isExpanded) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
 
                     float scale = SAUtils.getScaleFactor(getActivity());
                     contentWidth = (int) (scale * contentWidth);
@@ -474,66 +396,7 @@ public class SAWebPlayer extends Fragment implements
     @Override
     public void onGlobalLayout() {
 
-        if (isResized) {
-            webView.resize(holder.getMeasuredWidth(), holder.getMeasuredHeight());
-        } else {
-            webView.scale(contentWidth, contentHeight, holder.getMeasuredWidth(), holder.getMeasuredHeight());
-        }
-
-        if (getActivity() != null && expandedPlayer != null && expandedPlayer.isResized) {
-
-            //
-            // get screen & other measures that stay the same
-            SAUtils.SASize size = SAUtils.getRealScreenSize(getActivity(), false);
-
-            float postScaleX = (webView.getMeasuredWidth() * webView.getScaleX()) / (float) origContentWidth;
-            float postScaleY = (webView.getMeasuredHeight() * webView.getScaleY()) / (float) origContentHeight;
-
-            int loc[] = {0, 0};
-            webView.getLocationInWindow(loc);
-
-            //
-            // start calculating the actual Y position of the expanded player
-            int resizedHeight = (int) (mraid.getExpandedHeight() * postScaleY);
-            int resizedHalfHeight = (int) (resizedHeight / 2.0F);
-
-            Rect rectangle = new Rect();
-            Window window = getActivity().getWindow();
-            window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
-            int statusBarHeight = rectangle.top;
-
-            int wwYMiddle = loc[1] + (int) ((webView.getMeasuredHeight() * webView.getScaleY()) / 2.0F);
-
-            int bottomDif = size.height - wwYMiddle;
-            int topDiff = wwYMiddle;
-
-            int downMax = Math.min(bottomDif, resizedHalfHeight);
-            int upMax = Math.min(topDiff, resizedHalfHeight);
-            upMax += downMax < resizedHalfHeight ? (resizedHalfHeight - bottomDif) : 0;
-
-            int resizedY = wwYMiddle - upMax;
-            resizedY -= wwYMiddle > size.height / 2.0F ? statusBarHeight : 0;
-
-            //
-            // start calculating the actual X position of the expanded player
-            int resizedWidth = (int) (mraid.getExpandedWidth() * postScaleX);
-            int resizedHalfWidth = (int) (resizedWidth / 2.0F);
-
-            int wwXMiddle = loc[0] + (int) ((webView.getMeasuredWidth() * webView.getScaleX()) / 2.0F);
-
-            int rightDiff = size.width - wwXMiddle;
-            int leftDiff = wwXMiddle;
-
-            int rightMax = Math.min(rightDiff, resizedHalfWidth);
-            int leftMax = Math.min(leftDiff, resizedHalfWidth);
-            leftMax += rightMax < resizedHalfWidth ? (resizedHalfWidth - rightDiff) : 0;
-
-            int resizedX = wwXMiddle - leftMax;
-
-            expandedPlayer.holder.setTranslationX(resizedX);
-            expandedPlayer.holder.setTranslationY(resizedY);
-        }
-
+        webView.scale(contentWidth, contentHeight, holder.getMeasuredWidth(), holder.getMeasuredHeight());
         eventListener.saWebPlayerDidReceiveEvent(Event.Web_Layout, null);
 
     }

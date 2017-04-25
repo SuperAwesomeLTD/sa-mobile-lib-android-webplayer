@@ -1,5 +1,7 @@
 package tv.superawesome.lib.sawebplayer.mraid;
 
+import android.util.Log;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
@@ -258,6 +260,7 @@ public class SAMRAIDCommand {
     }
 
     private String parseUrl (String url) {
+        if (url == null) return null;
         try {
             return URLDecoder.decode(url, "UTF-8");
         } catch (UnsupportedEncodingException e) {
