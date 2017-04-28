@@ -6,6 +6,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
 
+        <activity
+            android:name=".mraid.SAMRAIDVideoActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+
     </application>
 
 </manifest>
