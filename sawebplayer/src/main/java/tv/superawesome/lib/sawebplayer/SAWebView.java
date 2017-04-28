@@ -59,11 +59,11 @@ public class SAWebView extends WebView {
         }
     }
 
-    public void loadHTML (String html) {
+    public void loadHTML (String base, String html) {
 
         String baseHtml = "<html><header><style>html, body, div { margin: 0px; padding: 0px; }</style></header><body>_CONTENT_</body></html>";
         String fullHtml = baseHtml.replace("_CONTENT_", html);
-        loadDataWithBaseURL(null, fullHtml, "text/html", "UTF-8", null);
+        loadDataWithBaseURL(base, fullHtml, "text/html", "UTF-8", null);
 
     }
 

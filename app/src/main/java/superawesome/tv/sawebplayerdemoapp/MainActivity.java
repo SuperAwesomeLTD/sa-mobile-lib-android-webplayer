@@ -78,7 +78,7 @@ public class MainActivity extends Activity {
                     Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
                     if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer.loadHTML(ad1);
+                        webPlayer.loadHTML("https://s3-eu-west-1.amazonaws.com", ad1);
                     }
 
                 }
@@ -98,7 +98,7 @@ public class MainActivity extends Activity {
                     Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
                     if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer.loadHTML(ad2);
+                        webPlayer.loadHTML("https://s3-eu-west-1.amazonaws.com", ad2);
                     }
 
                 }
@@ -118,7 +118,7 @@ public class MainActivity extends Activity {
                     Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
                     if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer2.loadHTML(ad3);
+                        webPlayer2.loadHTML("https://s3-eu-west-1.amazonaws.com", ad3);
                     }
 
                 }
@@ -138,7 +138,7 @@ public class MainActivity extends Activity {
                     Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
                     if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer2.loadHTML(ad4);
+                        webPlayer2.loadHTML("https://s3-eu-west-1.amazonaws.com", ad4);
                     }
 
                 }
@@ -158,7 +158,7 @@ public class MainActivity extends Activity {
                     Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
                     if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer2.loadHTML(ad5);
+                        webPlayer2.loadHTML("https://s3-eu-west-1.amazonaws.com", ad5);
                     }
 
                 }
@@ -178,7 +178,7 @@ public class MainActivity extends Activity {
                     Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
                     if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer.loadHTML(mraid1);
+                        webPlayer.loadHTML(null, mraid1);
                     }
                     else if (event == SAWebPlayer.Event.Web_Click) {
                         MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(destination)));
@@ -200,7 +200,7 @@ public class MainActivity extends Activity {
                     Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
                     if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer.loadHTML(mraid2);
+                        webPlayer.loadHTML(null, mraid2);
                     }
                     else if (event == SAWebPlayer.Event.Web_Click) {
                         MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(destination)));
@@ -222,7 +222,7 @@ public class MainActivity extends Activity {
                     Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
                     if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer2.loadHTML(mraid3);
+                        webPlayer2.loadHTML(null, mraid3);
                     }
                     else if (event == SAWebPlayer.Event.Web_Click) {
                         MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(destination)));
@@ -244,7 +244,7 @@ public class MainActivity extends Activity {
                     Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
                     if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer.loadHTML(mraid3);
+                        webPlayer.loadHTML(null, mraid3);
                     }
                     else if (event == SAWebPlayer.Event.Web_Click) {
                         MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(destination)));
@@ -266,7 +266,7 @@ public class MainActivity extends Activity {
                     Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
                     if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer2.loadHTML(mraid4);
+                        webPlayer2.loadHTML(null, mraid4);
                     }
                     else if (event == SAWebPlayer.Event.Web_Click) {
                         MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(destination)));

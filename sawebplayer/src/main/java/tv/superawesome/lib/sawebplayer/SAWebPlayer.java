@@ -250,7 +250,7 @@ public class SAWebPlayer extends Fragment implements
                                     getActivity().runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            expandedWebPlayer.loadHTML(contents);
+                                            expandedWebPlayer.loadHTML(null, contents);
                                         }
                                     });
                                 }
@@ -259,7 +259,7 @@ public class SAWebPlayer extends Fragment implements
                         })).start();
 
                     } else {
-                        expandedWebPlayer.loadHTML(html);
+                        expandedWebPlayer.loadHTML(null, html);
                     }
                 }
             }
@@ -290,7 +290,7 @@ public class SAWebPlayer extends Fragment implements
             public void saWebPlayerDidReceiveEvent(Event event, String destination) {
                 if (event == SAWebPlayer.Event.Web_Prepared) {
                     resizedWebPlayer.setEventListener(eventListener);
-                    resizedWebPlayer.loadHTML(html);
+                    resizedWebPlayer.loadHTML(null, html);
                 }
             }
         });
@@ -405,7 +405,7 @@ public class SAWebPlayer extends Fragment implements
     // Useful Web Player methods
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void loadHTML (String html) {
+    public void loadHTML (String base, String html) {
         if (webView != null) {
 
             // if the HTML is null, just return by default and don't do anything
@@ -418,7 +418,7 @@ public class SAWebPlayer extends Fragment implements
             mraid.injectMRAID();
 
             // load data directly, not from file as before
-            webView.loadHTML(html);
+            webView.loadHTML(base, html);
 
             // call success listener
             eventListener.saWebPlayerDidReceiveEvent(Event.Web_Loaded, null);
