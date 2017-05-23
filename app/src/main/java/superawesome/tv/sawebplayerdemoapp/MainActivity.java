@@ -71,6 +71,7 @@ public class MainActivity extends Activity {
         if (webPlayer != null) {
             manager.beginTransaction().remove(webPlayer).commit();
             webPlayer = new SAWebPlayer();
+            webPlayer.disableRetainInstance();
             webPlayer.setContentSize(320, 50);
             webPlayer.setEventListener(new SAWebPlayer.Listener() {
                 @Override
@@ -171,6 +172,7 @@ public class MainActivity extends Activity {
         if (webPlayer != null) {
             manager.beginTransaction().remove(webPlayer).commit();
             webPlayer = new SAWebPlayer();
+            webPlayer.disableRetainInstance();
             webPlayer.setContentSize(320, 50);
             webPlayer.setEventListener(new SAWebPlayer.Listener() {
                 @Override

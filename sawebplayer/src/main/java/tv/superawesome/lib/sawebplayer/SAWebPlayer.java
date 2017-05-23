@@ -62,6 +62,7 @@ public class SAWebPlayer extends Fragment implements
     protected int               holderWidth = ViewGroup.LayoutParams.MATCH_PARENT;
     protected int               holderHeight = ViewGroup.LayoutParams.MATCH_PARENT;
     protected int               holderBgColor = Color.TRANSPARENT;
+    protected boolean           retainsIntance = true;
 
     /**
      * Constructor
@@ -69,6 +70,10 @@ public class SAWebPlayer extends Fragment implements
     public SAWebPlayer() {
         eventListener = new Listener() {@Override public void saWebPlayerDidReceiveEvent(Event event, String destination) {}};
         mraid = new SAMRAID();
+    }
+
+    public void disableRetainInstance () {
+        retainsIntance = false;
     }
 
     public void setContentSize (int width, int height) {
@@ -85,7 +90,7 @@ public class SAWebPlayer extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
+        setRetainInstance(retainsIntance);
     }
 
     @Override
@@ -228,6 +233,7 @@ public class SAWebPlayer extends Fragment implements
         FragmentManager manager = getFragmentManager();
 
         expandedWebPlayer = new SAExpandedWebPlayer();
+        expandedWebPlayer.retainsIntance = retainsIntance;
         expandedWebPlayer.holderBgColor = Color.BLACK;
         expandedWebPlayer.setContentSize(width, height);
         expandedWebPlayer.mraid.setExpandedCustomClosePosition(mraid.getExpandedCustomClosePosition());
@@ -279,6 +285,7 @@ public class SAWebPlayer extends Fragment implements
         FragmentManager manager = getFragmentManager();
 
         resizedWebPlayer = new SAResizedWebPlayer();
+        resizedWebPlayer.retainsIntance = retainsIntance;
         resizedWebPlayer.holderWidth = resizedWidth;
         resizedWebPlayer.holderHeight = resizedHeight;
         resizedWebPlayer.mraid.setExpandedCustomClosePosition(mraid.getExpandedCustomClosePosition());
