@@ -98,10 +98,10 @@ public class SAWebPlayer extends RelativeLayout implements
         webView.setLayoutParams(new ViewGroup.LayoutParams(contentWidth, contentHeight));
         holder.setLayoutParams(new FrameLayout.LayoutParams(holderWidth, holderHeight));
 
-        eventListener.saWebPlayerDidReceiveEvent(Event.Web_Prepared, null);
-
         holder.addView(webView);
         this.addView(holder);
+
+        eventListener.saWebPlayerDidReceiveEvent(Event.Web_Prepared, null);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
