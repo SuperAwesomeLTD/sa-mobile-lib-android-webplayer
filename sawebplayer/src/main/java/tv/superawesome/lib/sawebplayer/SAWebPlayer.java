@@ -98,7 +98,6 @@ public class SAWebPlayer extends RelativeLayout implements
         webView.setLayoutParams(new ViewGroup.LayoutParams(contentWidth, contentHeight));
         holder.setLayoutParams(new FrameLayout.LayoutParams(holderWidth, holderHeight));
 
-        eventListener.saWebPlayerDidReceiveEvent(Event.Web_Started, null);
         eventListener.saWebPlayerDidReceiveEvent(Event.Web_Prepared, null);
 
         holder.addView(webView);
@@ -120,6 +119,7 @@ public class SAWebPlayer extends RelativeLayout implements
     public void onPageFinished(WebView view) {
         view.loadUrl("javascript:console.log('SAMRAID_EXT'+document.getElementsByTagName('html')[0].innerHTML);");
         finishedLoading = true;
+        eventListener.saWebPlayerDidReceiveEvent(Event.Web_Started, null);
     }
 
     @Override
