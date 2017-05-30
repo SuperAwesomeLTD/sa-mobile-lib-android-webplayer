@@ -1,6 +1,8 @@
 package tv.superawesome.lib.sawebplayer.aux;
 
+import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -49,6 +51,35 @@ public class SAWebAux {
     public static float dipToPixels(Context context, float dipValue) {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
+    }
+
+    public static void loadContentsOfURL(final Context context, final String url, final Listener listener) {
+        (new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                final String contents = SAWebAux.readContentsOfURL(url);
+                if (!TextUtils.isEmpty(contents)) {
+                    ((Activity)context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (listener != null) {
+                                listener.didLoadContent(contents);
+                            }
+                        }
+                    });
+                } else {
+                    if (listener != null) {
+                        listener.didLoadContent(null);
+                    }
+                }
+
+            }
+        })).start();
+    }
+
+    public interface Listener {
+        void didLoadContent(String content);
     }
 
 }

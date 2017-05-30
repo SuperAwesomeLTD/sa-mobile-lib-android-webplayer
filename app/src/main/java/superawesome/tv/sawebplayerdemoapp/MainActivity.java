@@ -1,13 +1,11 @@
 package superawesome.tv.sawebplayerdemoapp;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.google.common.io.ByteStreams;
 
@@ -18,12 +16,8 @@ import tv.superawesome.lib.sawebplayer.SAWebPlayer;
 
 public class MainActivity extends Activity {
 
-    FragmentManager manager = null;
-
+    RelativeLayout banner1Holder = null;
     SAWebPlayer webPlayer = null;
-    String webPlayerTag = "WebPlayerTag";
-    SAWebPlayer webPlayer2 = null;
-    String webPlayer2Tag = "WebPlayer2Tag";
 
     private String ad1;
     private String ad2;
@@ -40,8 +34,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        manager = getFragmentManager();
-
         ad1 = readFromFile(this, R.raw.ad1);
         ad2 = readFromFile(this, R.raw.ad2);
         ad3 = readFromFile(this, R.raw.ad3);
@@ -52,231 +44,77 @@ public class MainActivity extends Activity {
         mraid3 = readFromFile(this, R.raw.mraid3);
         mraid4 = readFromFile(this, R.raw.mraid4);
 
-        if (manager.findFragmentByTag(webPlayerTag) == null) {
-            webPlayer = new SAWebPlayer();
-            getFragmentManager().beginTransaction().add(R.id.MyBanner, webPlayer, webPlayerTag).commit();
-        } else {
-            webPlayer = (SAWebPlayer) manager.findFragmentByTag(webPlayerTag);
-        }
-
-        if (manager.findFragmentByTag(webPlayer2Tag) == null) {
-            webPlayer2 = new SAWebPlayer();
-            getFragmentManager().beginTransaction().add(R.id.MyBanner2, webPlayer2, webPlayer2Tag).commit();
-        } else {
-            webPlayer2 = (SAWebPlayer) manager.findFragmentByTag(webPlayer2Tag);
-        }
+        banner1Holder = (RelativeLayout) findViewById(R.id.Banner1Holder);
     }
 
     public void playAd1 (View v) {
+
         if (webPlayer != null) {
-            manager.beginTransaction().remove(webPlayer).commit();
-            webPlayer = new SAWebPlayer();
-            webPlayer.disableRetainInstance();
-            webPlayer.setContentSize(320, 50);
-            webPlayer.setEventListener(new SAWebPlayer.Listener() {
-                @Override
-                public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
-                    Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
-
-                    if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer.loadHTML("https://s3-eu-west-1.amazonaws.com", ad1);
-                    }
-
-                }
-            });
-            manager.beginTransaction().add(R.id.MyBanner, webPlayer, webPlayerTag).commit();
+            banner1Holder.removeView(webPlayer);
+            webPlayer = null;
         }
+        webPlayer = new SAWebPlayer(this);
+        webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        webPlayer.setContentSize(320, 50);
+        banner1Holder.addView(webPlayer);
+        webPlayer.setup();
+        webPlayer.loadHTML("https://s3-eu-west-1.amazonaws.com", ad1);
     }
 
     public void playAd2 (View v) {
+
         if (webPlayer != null) {
-            manager.beginTransaction().remove(webPlayer).commit();
-            webPlayer = new SAWebPlayer();
-            webPlayer.setContentSize(300, 250);
-            webPlayer.setEventListener(new SAWebPlayer.Listener() {
-                @Override
-                public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
-                    Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
-
-                    if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer.loadHTML("https://s3-eu-west-1.amazonaws.com", ad2);
-                    }
-
-                }
-            });
-            manager.beginTransaction().add(R.id.MyBanner, webPlayer, webPlayerTag).commit();
+            banner1Holder.removeView(webPlayer);
+            webPlayer = null;
         }
+        webPlayer = new SAWebPlayer(this);
+        webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        webPlayer.setContentSize(320, 250);
+        banner1Holder.addView(webPlayer);
+        webPlayer.setup();
+        webPlayer.loadHTML("https://s3-eu-west-1.amazonaws.com", ad2);
     }
 
     public void playAd3 (View v) {
-        if (webPlayer2 != null) {
-            manager.beginTransaction().remove(webPlayer2).commit();
-            webPlayer2 = new SAWebPlayer();
-            webPlayer2.setContentSize(320, 480);
-            webPlayer2.setEventListener(new SAWebPlayer.Listener() {
-                @Override
-                public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
-                    Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
-                    if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer2.loadHTML("https://s3-eu-west-1.amazonaws.com", ad3);
-                    }
-
-                }
-            });
-            manager.beginTransaction().add(R.id.MyBanner2, webPlayer2, webPlayer2Tag).commit();
+        if (webPlayer != null) {
+            banner1Holder.removeView(webPlayer);
+            webPlayer = null;
         }
+        webPlayer = new SAWebPlayer(this);
+        webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        webPlayer.setContentSize(320, 50);
+        banner1Holder.addView(webPlayer);
+        webPlayer.setup();
+        webPlayer.loadHTML(null, mraid1);
     }
 
     public void playAd4 (View v) {
-        if (webPlayer2 != null) {
-            manager.beginTransaction().remove(webPlayer2).commit();
-            webPlayer2 = new SAWebPlayer();
-            webPlayer2.setContentSize(320, 480);
-            webPlayer2.setEventListener(new SAWebPlayer.Listener() {
-                @Override
-                public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
-                    Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
-                    if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer2.loadHTML("https://s3-eu-west-1.amazonaws.com", ad4);
-                    }
-
-                }
-            });
-            manager.beginTransaction().add(R.id.MyBanner2, webPlayer2, webPlayer2Tag).commit();
+        if (webPlayer != null) {
+            banner1Holder.removeView(webPlayer);
+            webPlayer = null;
         }
+        webPlayer = new SAWebPlayer(this);
+        webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        webPlayer.setContentSize(300, 50);
+        banner1Holder.addView(webPlayer);
+        webPlayer.setup();
+        webPlayer.loadHTML(null, mraid2);
     }
 
     public void playAd5 (View v) {
-        if (webPlayer2 != null) {
-            manager.beginTransaction().remove(webPlayer2).commit();
-            webPlayer2 = new SAWebPlayer();
-            webPlayer2.setContentSize(320, 480);
-            webPlayer2.setEventListener(new SAWebPlayer.Listener() {
-                @Override
-                public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
-                    Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
 
-                    if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer2.loadHTML("https://s3-eu-west-1.amazonaws.com", ad5);
-                    }
-
-                }
-            });
-            manager.beginTransaction().add(R.id.MyBanner2, webPlayer2, webPlayer2Tag).commit();
-        }
-    }
-
-    public void playMRAID1 (View view) {
         if (webPlayer != null) {
-            manager.beginTransaction().remove(webPlayer).commit();
-            webPlayer = new SAWebPlayer();
-            webPlayer.disableRetainInstance();
-            webPlayer.setContentSize(320, 50);
-            webPlayer.setEventListener(new SAWebPlayer.Listener() {
-                @Override
-                public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
-                    Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
-
-                    if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer.loadHTML(null, mraid1);
-                    }
-                    else if (event == SAWebPlayer.Event.Web_Click) {
-                        MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(destination)));
-                    }
-                }
-            });
-            manager.beginTransaction().add(R.id.MyBanner, webPlayer, webPlayerTag).commit();
+            banner1Holder.removeView(webPlayer);
+            webPlayer = null;
         }
-    }
-
-    public void playMRAID2 (View view) {
-        if (webPlayer != null) {
-            manager.beginTransaction().remove(webPlayer).commit();
-            webPlayer = new SAWebPlayer();
-            webPlayer.setContentSize(300, 50);
-            webPlayer.setEventListener(new SAWebPlayer.Listener() {
-                @Override
-                public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
-                    Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
-
-                    if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer.loadHTML(null, mraid2);
-                    }
-                    else if (event == SAWebPlayer.Event.Web_Click) {
-                        MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(destination)));
-                    }
-                }
-            });
-            manager.beginTransaction().add(R.id.MyBanner, webPlayer, webPlayerTag).commit();
-        }
-    }
-
-    public void playMRAID3 (View view) {
-        if (webPlayer2 != null) {
-            manager.beginTransaction().remove(webPlayer2).commit();
-            webPlayer2 = new SAWebPlayer();
-            webPlayer2.setContentSize(320, 50);
-            webPlayer2.setEventListener(new SAWebPlayer.Listener() {
-                @Override
-                public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
-                    Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
-
-                    if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer2.loadHTML(null, mraid3);
-                    }
-                    else if (event == SAWebPlayer.Event.Web_Click) {
-                        MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(destination)));
-                    }
-                }
-            });
-            manager.beginTransaction().add(R.id.MyBanner2, webPlayer2, webPlayer2Tag).commit();
-        }
-    }
-
-    public void playMRAID4 (View view) {
-        if (webPlayer != null) {
-            manager.beginTransaction().remove(webPlayer).commit();
-            webPlayer = new SAWebPlayer();
-            webPlayer.setContentSize(320, 50);
-            webPlayer.setEventListener(new SAWebPlayer.Listener() {
-                @Override
-                public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
-                    Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
-
-                    if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer.loadHTML(null, mraid3);
-                    }
-                    else if (event == SAWebPlayer.Event.Web_Click) {
-                        MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(destination)));
-                    }
-                }
-            });
-            manager.beginTransaction().add(R.id.MyBanner, webPlayer, webPlayerTag).commit();
-        }
-    }
-
-    public void playMRAID5 (View view) {
-        if (webPlayer2 != null) {
-            manager.beginTransaction().remove(webPlayer2).commit();
-            webPlayer2 = new SAWebPlayer();
-            webPlayer2.setContentSize(320, 100);
-            webPlayer2.setEventListener(new SAWebPlayer.Listener() {
-                @Override
-                public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
-                    Log.d("SuperAwesome", "Event is " + event +  " Dest " + destination);
-
-                    if (event == SAWebPlayer.Event.Web_Prepared) {
-                        webPlayer2.loadHTML(null, mraid4);
-                    }
-                    else if (event == SAWebPlayer.Event.Web_Click) {
-                        MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(destination)));
-                    }
-                }
-            });
-            manager.beginTransaction().add(R.id.MyBanner2, webPlayer2, webPlayer2Tag).commit();
-        }
+        webPlayer = new SAWebPlayer(this);
+        webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        webPlayer.setContentSize(320, 50);
+        banner1Holder.addView(webPlayer);
+        webPlayer.setup();
+        webPlayer.loadHTML(null, mraid3);
     }
 
     private static String readFromFile (Context context, int ID) {

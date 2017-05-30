@@ -8,13 +8,10 @@
     android:background="#ffffffff"
     tools:context="superawesome.tv.sawebplayerdemoapp.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/MyBanner"
-        android:background="#0000ff00"
+    <RelativeLayout
+        android:id="@+id/Banner1Holder"
         android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:clipChildren="false"
-        android:clipToPadding="false"/>
+        android:layout_height="100dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -57,64 +54,4 @@
             android:onClick="playAd5"/>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp">
-
-        <Button
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:text="M 1"
-            android:onClick="playMRAID1"/>
-
-        <Button
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:text="M 2"
-            android:onClick="playMRAID2"/>
-
-        <Button
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:text="M 3"
-            android:onClick="playMRAID3"/>
-
-        <Button
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:text="M 4"
-            android:onClick="playMRAID4"/>
-
-        <Button
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:text="M 5"
-            android:onClick="playMRAID5"/>
-
-    </LinearLayout>
-
-
-    <RelativeLayout
-        android:gravity="bottom|center_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipChildren="false"
-        android:clipToPadding="false">
-
-        <RelativeLayout
-            android:id="@+id/MyBanner2"
-            android:background="#00ffff00"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipChildren="false"
-            android:clipToPadding="false"/>
-
-    </RelativeLayout>
-
 </LinearLayout>

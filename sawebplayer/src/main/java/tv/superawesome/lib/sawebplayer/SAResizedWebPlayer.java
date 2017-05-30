@@ -1,7 +1,10 @@
 package tv.superawesome.lib.sawebplayer;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
+import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.WebView;
@@ -10,8 +13,19 @@ import tv.superawesome.lib.sautils.SAUtils;
 
 public class SAResizedWebPlayer extends SAExpandedWebPlayer {
 
+    public SAResizedWebPlayer(Context context) {
+        this(context, null, 0);
+    }
+
+    public SAResizedWebPlayer(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public SAResizedWebPlayer(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
     public WebView parentWebView;
-    public SAWebPlayer parent;
 
     @Override
     public boolean onConsoleMessage(String message) {
@@ -23,7 +37,7 @@ public class SAResizedWebPlayer extends SAExpandedWebPlayer {
 
             if (mraid.hasMRAID()) {
 
-                SAUtils.SASize screen = SAUtils.getRealScreenSize(getActivity(), false);
+                SAUtils.SASize screen = SAUtils.getRealScreenSize((Activity)getContext(), false);
 
                 mraid.setPlacementInline();
                 mraid.setReady();
@@ -39,7 +53,7 @@ public class SAResizedWebPlayer extends SAExpandedWebPlayer {
 
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
 
-                    float scale = SAUtils.getScaleFactor(getActivity());
+                    float scale = SAUtils.getScaleFactor((Activity)getContext());
                     contentWidth = (int) (scale * contentWidth);
                     contentHeight = (int) (scale * contentHeight);
 
@@ -57,11 +71,11 @@ public class SAResizedWebPlayer extends SAExpandedWebPlayer {
     @Override
     public void onGlobalLayout() {
 
-        if (getActivity() != null) {
+        if (getContext() != null) {
 
-            SAUtils.SASize screen = SAUtils.getRealScreenSize(getActivity(), false);
+            SAUtils.SASize screen = SAUtils.getRealScreenSize((Activity)getContext(), false);
             Rect rectangle = new Rect();
-            Window window = getActivity().getWindow();
+            Window window = ((Activity)getContext()).getWindow();
             window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
             int bottom = screen.height - rectangle.bottom;
 
@@ -89,6 +103,6 @@ public class SAResizedWebPlayer extends SAExpandedWebPlayer {
 
         }
 
-        eventListener.saWebPlayerDidReceiveEvent(Event.Web_Layout, null);
+        eventListener.saWebPlayerDidReceiveEvent(SAWebPlayer.Event.Web_Layout, null);
     }
 }

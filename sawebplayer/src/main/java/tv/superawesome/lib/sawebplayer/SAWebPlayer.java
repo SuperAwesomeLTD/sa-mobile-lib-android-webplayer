@@ -1,19 +1,18 @@
 package tv.superawesome.lib.sawebplayer;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import tv.superawesome.lib.sautils.SAUtils;
 import tv.superawesome.lib.sawebplayer.aux.SAWebAux;
@@ -21,14 +20,13 @@ import tv.superawesome.lib.sawebplayer.mraid.SAMRAID;
 import tv.superawesome.lib.sawebplayer.mraid.SAMRAIDCommand;
 import tv.superawesome.lib.sawebplayer.mraid.SAMRAIDVideoActivity;
 
-public class SAWebPlayer extends Fragment implements
+import static android.os.Build.VERSION_CODES.KITKAT;
+
+public class SAWebPlayer extends RelativeLayout implements
         SAWebClient.Listener,
         SAWebChromeClient.Listener,
         ViewTreeObserver.OnGlobalLayoutListener,
-        SAMRAIDCommand.Listener
-{
-
-    private static final String kEXPANDED_PLAYER = "expandedPlayer";
+        SAMRAIDCommand.Listener {
 
     public enum Event {
         Web_Prepared,
@@ -62,18 +60,31 @@ public class SAWebPlayer extends Fragment implements
     protected int               holderWidth = ViewGroup.LayoutParams.MATCH_PARENT;
     protected int               holderHeight = ViewGroup.LayoutParams.MATCH_PARENT;
     protected int               holderBgColor = Color.TRANSPARENT;
-    protected boolean           retainsIntance = true;
 
-    /**
-     * Constructor
-     */
-    public SAWebPlayer() {
-        eventListener = new Listener() {@Override public void saWebPlayerDidReceiveEvent(Event event, String destination) {}};
-        mraid = new SAMRAID();
+    public SAWebPlayer(Context context) {
+        this(context, null, 0);
     }
 
-    public void disableRetainInstance () {
-        retainsIntance = false;
+    public SAWebPlayer(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public SAWebPlayer(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+
+        eventListener = new Listener() {@Override public void saWebPlayerDidReceiveEvent(Event event, String destination) {}};
+        mraid = new SAMRAID();
+
+        holder = new FrameLayout(context);
+        holder.setClipChildren(false);
+        holder.setBackgroundColor(holderBgColor);
+        holder.setClipToPadding(false);
+
+        webView = new SAWebView(context);
+        webView.setWebViewClient(new SAWebClient(this));
+        webView.setWebChromeClient(new SAWebChromeClient(this));
+
+        this.getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 
     public void setContentSize (int width, int height) {
@@ -83,74 +94,15 @@ public class SAWebPlayer extends Fragment implements
         contentHeight = height;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    // Overridden fragment methods
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(retainsIntance);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        eventListener.saWebPlayerDidReceiveEvent(Event.Web_Started, null);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        FragmentManager manager = getFragmentManager();
-        if (expandedWebPlayer != null) {
-            try {
-                manager.beginTransaction().remove(expandedWebPlayer).commit();
-            } catch (Exception e) {
-                // do nothing
-            }
-        }
-        if (resizedWebPlayer != null) {
-            try {
-                manager.beginTransaction().remove(resizedWebPlayer).commit();
-            } catch (Exception e) {
-                // do nothing
-            }
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-
-        if (holder == null) {
-
-            holder = new FrameLayout(getActivity());
-            holder.setLayoutParams(new FrameLayout.LayoutParams(holderWidth, holderHeight));
-            holder.setClipChildren(false);
-            holder.setBackgroundColor(holderBgColor);
-            holder.setClipToPadding(false);
-
-            webView = new SAWebView(getActivity());
-            webView.setWebViewClient(new SAWebClient(this));
-            webView.setWebChromeClient(new SAWebChromeClient(this));
-
-            eventListener.saWebPlayerDidReceiveEvent(Event.Web_Prepared, null);
-        }
-        else {
-            holder.removeView(webView);
-            if (container != null) {
-                container.removeView(holder);
-            }
-        }
-
+    public void setup () {
         webView.setLayoutParams(new ViewGroup.LayoutParams(contentWidth, contentHeight));
+        holder.setLayoutParams(new FrameLayout.LayoutParams(holderWidth, holderHeight));
+
+        eventListener.saWebPlayerDidReceiveEvent(Event.Web_Started, null);
+        eventListener.saWebPlayerDidReceiveEvent(Event.Web_Prepared, null);
+
         holder.addView(webView);
-
-        if (container != null) {
-            container.getViewTreeObserver().addOnGlobalLayoutListener(this);
-        }
-
-        return holder;
+        this.addView(holder);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,8 +124,6 @@ public class SAWebPlayer extends Fragment implements
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView webView, String url) {
-
-        Log.d("SuperAwesome", "URL is " + url);
 
         SAMRAIDCommand command = new SAMRAIDCommand();
         boolean isMraid = command.isMRAIDCommand(url);
@@ -203,74 +153,40 @@ public class SAWebPlayer extends Fragment implements
 
     @Override
     public void closeCommand() {
-
-        FragmentManager manager = getFragmentManager();
-        if (manager != null) {
-            SAWebPlayer player = (SAWebPlayer) manager.findFragmentByTag(kEXPANDED_PLAYER);
-            if (player != null) {
-                manager.beginTransaction().remove(player).commit();
-            }
-        }
-
+        // do nothing in here
     }
 
     @Override
     public void expandCommand(final String url) {
 
-        SAUtils.SASize size = SAUtils.getRealScreenSize(getActivity(), false);
-        float scale = SAUtils.getScaleFactor(getActivity());
+        SAUtils.SASize size = SAUtils.getRealScreenSize((Activity)getContext(), false);
+        float scale = SAUtils.getScaleFactor((Activity)getContext());
+        boolean oldV = Build.VERSION.SDK_INT < KITKAT;
+        final int width = oldV ? size.width : (int) (size.width / scale),
+                height = oldV ? size.height : (int) (size.height / scale);
 
-        int width, height;
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            width = size.width;
-            height = size.height;
-        } else {
-            width = (int) (size.width / scale);
-            height = (int) (size.height / scale);
-        }
-
-        FragmentManager manager = getFragmentManager();
-
-        expandedWebPlayer = new SAExpandedWebPlayer();
-        expandedWebPlayer.retainsIntance = retainsIntance;
-        expandedWebPlayer.holderBgColor = Color.BLACK;
+        expandedWebPlayer = new SAExpandedWebPlayer(getContext());
         expandedWebPlayer.setContentSize(width, height);
+        expandedWebPlayer.setEventListener(eventListener);
+        expandedWebPlayer.holderBgColor = Color.BLACK;
         expandedWebPlayer.mraid.setExpandedCustomClosePosition(mraid.getExpandedCustomClosePosition());
-        expandedWebPlayer.setEventListener(new Listener() {
-            @Override
-            public void saWebPlayerDidReceiveEvent(Event event, String destination) {
+        ((FrameLayout)((Activity)getContext()).findViewById(android.R.id.content)).addView(expandedWebPlayer);
+        expandedWebPlayer.setup();
 
-                if (event == SAWebPlayer.Event.Web_Prepared) {
-
-                    expandedWebPlayer.setEventListener(eventListener);
-
-                    if (url != null) {
-
-                        (new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                final String contents = SAWebAux.readContentsOfURL(url);
-                                if (!TextUtils.isEmpty(contents)) {
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            expandedWebPlayer.loadHTML(null, contents);
-                                        }
-                                    });
-                                }
-
-                            }
-                        })).start();
-
+        if (url != null) {
+            SAWebAux.loadContentsOfURL(getContext(), url, new SAWebAux.Listener() {
+                @Override
+                public void didLoadContent(String content) {
+                    if (content != null) {
+                        expandedWebPlayer.loadHTML(null, content);
                     } else {
                         expandedWebPlayer.loadHTML(null, html);
                     }
                 }
-            }
-        });
-        manager.beginTransaction().add(android.R.id.content, expandedWebPlayer, kEXPANDED_PLAYER).commit();
+            });
+        } else {
+            expandedWebPlayer.loadHTML(null, html);
+        }
     }
 
     @Override
@@ -282,26 +198,16 @@ public class SAWebPlayer extends Fragment implements
         int resizedWidth = (int) (mraid.getExpandedWidth() * postScaleX);
         int resizedHeight = (int) (mraid.getExpandedHeight() * postScaleY);
 
-        FragmentManager manager = getFragmentManager();
-
-        resizedWebPlayer = new SAResizedWebPlayer();
-        resizedWebPlayer.retainsIntance = retainsIntance;
+        resizedWebPlayer = new SAResizedWebPlayer(getContext());
+        resizedWebPlayer.setContentSize(mraid.getExpandedWidth(), mraid.getExpandedHeight());
+        resizedWebPlayer.setEventListener(eventListener);
         resizedWebPlayer.holderWidth = resizedWidth;
         resizedWebPlayer.holderHeight = resizedHeight;
         resizedWebPlayer.mraid.setExpandedCustomClosePosition(mraid.getExpandedCustomClosePosition());
-        resizedWebPlayer.setContentSize(mraid.getExpandedWidth(), mraid.getExpandedHeight());
         resizedWebPlayer.parentWebView = webView;
-        resizedWebPlayer.parent = this;
-        resizedWebPlayer.setEventListener(new Listener() {
-            @Override
-            public void saWebPlayerDidReceiveEvent(Event event, String destination) {
-                if (event == SAWebPlayer.Event.Web_Prepared) {
-                    resizedWebPlayer.setEventListener(eventListener);
-                    resizedWebPlayer.loadHTML(null, html);
-                }
-            }
-        });
-        manager.beginTransaction().add(android.R.id.content, resizedWebPlayer, kEXPANDED_PLAYER).commit();
+        ((FrameLayout)((Activity)getContext()).findViewById(android.R.id.content)).addView(resizedWebPlayer);
+        resizedWebPlayer.setup();
+        resizedWebPlayer.loadHTML(null, html);
     }
 
     @Override
@@ -322,9 +228,9 @@ public class SAWebPlayer extends Fragment implements
     @Override
     public void playVideoCommand(String url) {
         if (url != null) {
-            Intent intent = new Intent(getActivity(), SAMRAIDVideoActivity.class);
+            Intent intent = new Intent(getContext(), SAMRAIDVideoActivity.class);
             intent.putExtra("link_url", url);
-            getActivity().startActivity(intent);
+            getContext().startActivity(intent);
         }
     }
 
@@ -359,7 +265,7 @@ public class SAWebPlayer extends Fragment implements
 
                 Log.d("SuperAwesome", "MRAID SHOULD BE PRESENT");
 
-                SAUtils.SASize screen = SAUtils.getRealScreenSize(getActivity(), false);
+                SAUtils.SASize screen = SAUtils.getRealScreenSize((Activity)getContext(), false);
 
                 mraid.setPlacementInline();
                 mraid.setReady();
@@ -372,9 +278,9 @@ public class SAWebPlayer extends Fragment implements
                 mraid.setReady();
                 mraid.setViewableTrue();
 
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+                if (Build.VERSION.SDK_INT < KITKAT) {
 
-                    float scale = SAUtils.getScaleFactor(getActivity());
+                    float scale = SAUtils.getScaleFactor((Activity)getContext());
                     contentWidth = (int) (scale * contentWidth);
                     contentHeight = (int) (scale * contentHeight);
 
@@ -405,7 +311,6 @@ public class SAWebPlayer extends Fragment implements
 
         webView.scale(contentWidth, contentHeight, holder.getMeasuredWidth(), holder.getMeasuredHeight());
         eventListener.saWebPlayerDidReceiveEvent(Event.Web_Layout, null);
-
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

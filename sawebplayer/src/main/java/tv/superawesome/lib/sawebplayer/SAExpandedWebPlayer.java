@@ -1,11 +1,12 @@
 package tv.superawesome.lib.sawebplayer;
 
-import android.app.FragmentManager;
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -17,6 +18,20 @@ import tv.superawesome.lib.sawebplayer.mraid.SAMRAIDCommand;
 public class SAExpandedWebPlayer extends SAWebPlayer {
 
     protected Button closeButton = null;
+
+    public SAExpandedWebPlayer(Context context) {
+        this(context, null, 0);
+    }
+
+    public SAExpandedWebPlayer(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public SAExpandedWebPlayer(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+
+        super.holder.setBackgroundColor(Color.BLACK);
+    }
 
     @Override
     public void expandCommand(final String url) {
@@ -34,18 +49,26 @@ public class SAExpandedWebPlayer extends SAWebPlayer {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        holder =  (FrameLayout) super.onCreateView(inflater, container, savedInstanceState);
+    public void closeCommand() {
+        ViewParent parent = getParent();
+        if (parent != null && parent instanceof FrameLayout) {
+            ((FrameLayout)parent).removeView(this);
+        }
+    }
+
+    @Override
+    public void setup() {
+        super.setup();
 
         // do this only for the Resized / Expanded web player
         if (mraid.getExpandedCustomClosePosition() != SAMRAIDCommand.CustomClosePosition.Unavailable) {
-            RelativeLayout closeButtonHolder = new RelativeLayout(getActivity());
+            RelativeLayout closeButtonHolder = new RelativeLayout(getContext());
             closeButtonHolder.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             holder.addView(closeButtonHolder);
 
-            closeButton = new Button(getActivity());
-            int btnWidth = (int) SAWebAux.dipToPixels(getActivity(), 50);
-            int btnHeight = (int) SAWebAux.dipToPixels(getActivity(), 50);
+            closeButton = new Button(getContext());
+            int btnWidth = (int) SAWebAux.dipToPixels(getContext(), 50);
+            int btnHeight = (int) SAWebAux.dipToPixels(getContext(), 50);
             RelativeLayout.LayoutParams btnParams = new RelativeLayout.LayoutParams(btnWidth, btnHeight);
 
             switch (mraid.getExpandedCustomClosePosition()) {
@@ -85,21 +108,11 @@ public class SAExpandedWebPlayer extends SAWebPlayer {
             closeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    FragmentManager manager = getFragmentManager();
-                    if (manager != null) {
-                        try {
-                            manager.beginTransaction().remove(SAExpandedWebPlayer.this).commit();
-                        } catch (Exception e) {
-                            // do nothing
-                        }
-                    }
+                    closeCommand();
                 }
             });
             closeButtonHolder.addView(closeButton);
         }
-
-        return holder;
     }
 
     @Override
@@ -112,7 +125,7 @@ public class SAExpandedWebPlayer extends SAWebPlayer {
 
             if (mraid.hasMRAID()) {
 
-                SAUtils.SASize screen = SAUtils.getRealScreenSize(getActivity(), false);
+                SAUtils.SASize screen = SAUtils.getRealScreenSize((Activity)getContext(), false);
 
                 mraid.setPlacementInline();
                 mraid.setReady();
@@ -122,7 +135,7 @@ public class SAExpandedWebPlayer extends SAWebPlayer {
                 mraid.setCurrentPosition(contentWidth, contentHeight);
                 mraid.setDefaultPosition(contentWidth, contentHeight);
 
-                float scale = SAUtils.getScaleFactor(getActivity());
+                float scale = SAUtils.getScaleFactor((Activity)getContext());
                 int width = (int) (screen.width / scale);
                 int height = (int) (screen.height / scale);
                 mraid.setStateToExpanded();
@@ -130,7 +143,6 @@ public class SAExpandedWebPlayer extends SAWebPlayer {
 
                 mraid.setReady();
                 mraid.setViewableTrue();
-
             }
         }
 
