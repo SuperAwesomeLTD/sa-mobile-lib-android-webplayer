@@ -1,10 +1,9 @@
-package tv.superawesome.lib.sawebplayer.aux;
+package tv.superawesome.lib.sawebplayer.utilities;
 
 import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 
 import java.io.IOException;
@@ -12,9 +11,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class SAWebAux {
+public class SAWebUtils {
 
-    public static String readContentsOfURL (String url) {
+    private static String readContentsOfURL(String url) {
 
         String content = null;
         InputStream is = null;
@@ -58,7 +57,7 @@ public class SAWebAux {
             @Override
             public void run() {
 
-                final String contents = SAWebAux.readContentsOfURL(url);
+                final String contents = SAWebUtils.readContentsOfURL(url);
                 if (!TextUtils.isEmpty(contents)) {
                     ((Activity)context).runOnUiThread(new Runnable() {
                         @Override

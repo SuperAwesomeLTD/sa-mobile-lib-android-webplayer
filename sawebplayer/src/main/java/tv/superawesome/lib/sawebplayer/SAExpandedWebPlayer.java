@@ -12,7 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import tv.superawesome.lib.sautils.SAUtils;
-import tv.superawesome.lib.sawebplayer.aux.SAWebAux;
+import tv.superawesome.lib.sawebplayer.utilities.SAWebUtils;
 import tv.superawesome.lib.sawebplayer.mraid.SAMRAIDCommand;
 
 public class SAExpandedWebPlayer extends SAWebPlayer {
@@ -67,8 +67,8 @@ public class SAExpandedWebPlayer extends SAWebPlayer {
             holder.addView(closeButtonHolder);
 
             closeButton = new Button(getContext());
-            int btnWidth = (int) SAWebAux.dipToPixels(getContext(), 50);
-            int btnHeight = (int) SAWebAux.dipToPixels(getContext(), 50);
+            int btnWidth = (int) SAWebUtils.dipToPixels(getContext(), 50);
+            int btnHeight = (int) SAWebUtils.dipToPixels(getContext(), 50);
             RelativeLayout.LayoutParams btnParams = new RelativeLayout.LayoutParams(btnWidth, btnHeight);
 
             switch (mraid.getExpandedCustomClosePosition()) {

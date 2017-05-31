@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import tv.superawesome.lib.sautils.SAUtils;
-import tv.superawesome.lib.sawebplayer.aux.SAWebAux;
+import tv.superawesome.lib.sawebplayer.utilities.SAWebUtils;
 import tv.superawesome.lib.sawebplayer.mraid.SAMRAID;
 import tv.superawesome.lib.sawebplayer.mraid.SAMRAIDCommand;
 import tv.superawesome.lib.sawebplayer.mraid.SAMRAIDVideoActivity;
@@ -174,7 +173,7 @@ public class SAWebPlayer extends RelativeLayout implements
         expandedWebPlayer.setup();
 
         if (url != null) {
-            SAWebAux.loadContentsOfURL(getContext(), url, new SAWebAux.Listener() {
+            SAWebUtils.loadContentsOfURL(getContext(), url, new SAWebUtils.Listener() {
                 @Override
                 public void didLoadContent(String content) {
                     if (content != null) {
