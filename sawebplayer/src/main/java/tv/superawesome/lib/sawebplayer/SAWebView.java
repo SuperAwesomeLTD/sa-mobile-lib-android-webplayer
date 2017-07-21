@@ -3,6 +3,7 @@ package tv.superawesome.lib.sawebplayer;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.webkit.WebView;
@@ -26,6 +27,9 @@ public class SAWebView extends WebView {
         setHorizontalScrollBarEnabled(false);
         setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         setFocusableInTouchMode(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            getSettings().setMediaPlaybackRequiresUserGesture(false);
+        }
         getSettings().setJavaScriptEnabled(true);
     }
 

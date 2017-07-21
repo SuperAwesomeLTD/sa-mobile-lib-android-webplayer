@@ -254,6 +254,8 @@ public class SAWebPlayer extends RelativeLayout implements
 
     @Override
     public boolean onConsoleMessage(String message) {
+        Log.d("SuperAwesome-Console", message);
+
         if (message.startsWith("SAMRAID_EXT"))  {
 
             String msg = message.substring(5); // strip off prefix
@@ -267,8 +269,6 @@ public class SAWebPlayer extends RelativeLayout implements
                 SAUtils.SASize screen = SAUtils.getRealScreenSize((Activity)getContext(), false);
 
                 mraid.setPlacementInline();
-                mraid.setReady();
-                mraid.setViewableTrue();
                 mraid.setScreenSize(screen.width, screen.height);
                 mraid.setMaxSize(screen.width, screen.height);
                 mraid.setCurrentPosition(contentWidth, contentHeight);
@@ -294,8 +294,6 @@ public class SAWebPlayer extends RelativeLayout implements
             }
 
             return true;
-        } else {
-            Log.d("SuperAwesome", message);
         }
 
         return false;

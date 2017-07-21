@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
     private String mraid2;
     private String mraid3;
     private String mraid4;
+    private String mraid5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class MainActivity extends Activity {
         mraid2 = readFromFile(this, R.raw.mraid2);
         mraid3 = readFromFile(this, R.raw.mraid3);
         mraid4 = readFromFile(this, R.raw.mraid4);
+        mraid5 = readFromFile(this, R.raw.mraid5);
 
         banner1Holder = (RelativeLayout) findViewById(R.id.Banner1Holder);
     }
@@ -69,10 +71,10 @@ public class MainActivity extends Activity {
         }
         webPlayer = new SAWebPlayer(this);
         webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        webPlayer.setContentSize(320, 250);
+        webPlayer.setContentSize(320, 480);
         banner1Holder.addView(webPlayer);
         webPlayer.setup();
-        webPlayer.loadHTML("https://s3-eu-west-1.amazonaws.com", ad2);
+        webPlayer.loadHTML("https://s3-eu-west-1.amazonaws.com", ad3);
     }
 
     public void playAd3 (View v) {
@@ -114,7 +116,7 @@ public class MainActivity extends Activity {
         webPlayer.setContentSize(320, 50);
         banner1Holder.addView(webPlayer);
         webPlayer.setup();
-        webPlayer.loadHTML(null, mraid3);
+        webPlayer.loadHTML(null, mraid5);
     }
 
     private static String readFromFile (Context context, int ID) {

@@ -142,7 +142,6 @@ public class SAExpandedWebPlayer extends SAWebPlayer {
                 mraid.setCurrentPosition(width, height - 1);
 
                 mraid.setReady();
-                mraid.setViewableTrue();
             }
         }
 
