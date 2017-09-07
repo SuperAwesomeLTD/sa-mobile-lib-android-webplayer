@@ -135,10 +135,6 @@ public class SAWebPlayer extends RelativeLayout implements
 
             return false;
         }
-        else if (url.equals("mopub://failLoad")) {
-            eventListener.saWebPlayerDidReceiveEvent(Event.Web_Empty, url);
-            return true;
-        }
         else {
 
             if (finishedLoading) {

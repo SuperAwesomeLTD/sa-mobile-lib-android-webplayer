@@ -11,10 +11,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="478c2583-5c06-4c03-be2f-f949c5902b26" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/raw/ad6.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/superawesome/tv/sawebplayerdemoapp/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/superawesome/tv/sawebplayerdemoapp/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sawebplayer/src/main/java/tv/superawesome/lib/sawebplayer/SAWebPlayer.java" afterPath="$PROJECT_DIR$/sawebplayer/src/main/java/tv/superawesome/lib/sawebplayer/SAWebPlayer.java" />
     </list>
     <ignored path="sa-mobile-lib-android-webplayer.iws" />
@@ -208,8 +206,8 @@
       <file leaf-file-name="SAWebPlayer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sawebplayer/src/main/java/tv/superawesome/lib/sawebplayer/SAWebPlayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="139" column="24" selection-start-line="139" selection-start-column="24" selection-end-line="139" selection-end-column="24" />
+            <state relative-caret-position="420">
+              <caret line="136" column="9" selection-start-line="136" selection-start-column="9" selection-end-line="136" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -235,7 +233,13 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="345">
               <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#331#332#0" expanded="false" />
+                <element signature="e#369#370#0" expanded="false" />
+                <element signature="e#430#431#0" expanded="false" />
+                <element signature="e#469#470#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -2903,9 +2907,9 @@
         <option value="$PROJECT_DIR$/sawebplayer/src/main/java/tv/superawesome/lib/sawebplayer/SAWebView.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/raw/ad3.txt" />
         <option value="$PROJECT_DIR$/app/src/main/res/raw/ad6.txt" />
-        <option value="$PROJECT_DIR$/sawebplayer/src/main/java/tv/superawesome/lib/sawebplayer/SAWebPlayer.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/superawesome/tv/sawebplayerdemoapp/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/sawebplayer/src/main/java/tv/superawesome/lib/sawebplayer/SAWebPlayer.java" />
         <option value="$PROJECT_DIR$/local.properties" />
       </list>
     </option>
@@ -3130,7 +3134,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="show.do.not.ask.upgrade.gradle.plugin.version" value="2.2.2" />
-    <property name="device.picker.selection" value="07da743a0245eb47" />
+    <property name="device.picker.selection" value="192.168.65.101:5555" />
     <property name="FullScreen" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
   </component>
@@ -3533,7 +3537,7 @@
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20089859" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32832617" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3279846" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -3559,7 +3563,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="840">
           <caret line="65" column="54" selection-start-line="65" selection-start-column="45" selection-end-line="65" selection-end-column="54" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#331#332#0" expanded="false" />
+            <element signature="e#369#370#0" expanded="false" />
+            <element signature="e#430#431#0" expanded="false" />
+            <element signature="e#469#470#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3619,7 +3629,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#331#332#0" expanded="false" />
+            <element signature="e#369#370#0" expanded="false" />
+            <element signature="e#430#431#0" expanded="false" />
+            <element signature="e#469#470#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3679,7 +3695,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="840">
           <caret line="65" column="32" selection-start-line="65" selection-start-column="32" selection-end-line="65" selection-end-column="32" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#331#332#0" expanded="false" />
+            <element signature="e#369#370#0" expanded="false" />
+            <element signature="e#430#431#0" expanded="false" />
+            <element signature="e#469#470#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3820,7 +3842,7 @@
         <state relative-caret-position="90">
           <caret line="18" column="40" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="40" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3882,7 +3904,7 @@
         <state relative-caret-position="1860">
           <caret line="143" column="33" selection-start-line="143" selection-start-column="33" selection-end-line="143" selection-end-column="33" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3922,7 +3944,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#331#332#0" expanded="false" />
+            <element signature="e#369#370#0" expanded="false" />
+            <element signature="e#430#431#0" expanded="false" />
+            <element signature="e#469#470#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3958,16 +3986,6 @@
         <state relative-caret-position="0">
           <caret line="0" column="50" selection-start-line="0" selection-start-column="50" selection-end-line="0" selection-end-column="50" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sawebplayer/src/main/java/tv/superawesome/lib/sawebplayer/SAWebPlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="139" column="24" selection-start-line="139" selection-start-column="24" selection-end-line="139" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4007,6 +4025,16 @@
       </provider>
       <provider editor-type-id="android-designer2">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sawebplayer/src/main/java/tv/superawesome/lib/sawebplayer/SAWebPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="136" column="9" selection-start-line="136" selection-start-column="9" selection-end-line="136" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/local.properties">
