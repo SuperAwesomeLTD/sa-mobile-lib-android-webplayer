@@ -8,10 +8,7 @@
     android:background="#ffffffff"
     tools:context="superawesome.tv.sawebplayerdemoapp.MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/Banner1Holder"
-        android:layout_width="200dp"
-        android:layout_height="100dp"/>
+
 
     <LinearLayout
         android:orientation="horizontal"
@@ -54,4 +51,9 @@
             android:onClick="playAd5"/>
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/Banner1Holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

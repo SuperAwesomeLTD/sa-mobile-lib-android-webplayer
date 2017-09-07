@@ -3,6 +3,7 @@ package superawesome.tv.sawebplayerdemoapp;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -24,6 +25,7 @@ public class MainActivity extends Activity {
     private String ad3;
     private String ad4;
     private String ad5;
+    private String ad6;
     private String mraid1;
     private String mraid2;
     private String mraid3;
@@ -40,6 +42,7 @@ public class MainActivity extends Activity {
         ad3 = readFromFile(this, R.raw.ad3);
         ad4 = readFromFile(this, R.raw.ad4);
         ad5 = readFromFile(this, R.raw.ad5);
+        ad6 = readFromFile(this, R.raw.ad6);
         mraid1 = readFromFile(this, R.raw.mraid1);
         mraid2 = readFromFile(this, R.raw.mraid2);
         mraid3 = readFromFile(this, R.raw.mraid3);
@@ -56,11 +59,17 @@ public class MainActivity extends Activity {
             webPlayer = null;
         }
         webPlayer = new SAWebPlayer(this);
+        webPlayer.setEventListener(new SAWebPlayer.Listener() {
+            @Override
+            public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
+                Log.d("SuperAwesome/WebView", "Event is " + event + " | " + destination);
+            }
+        });
         webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         webPlayer.setContentSize(320, 50);
         banner1Holder.addView(webPlayer);
         webPlayer.setup();
-        webPlayer.loadHTML("https://s3-eu-west-1.amazonaws.com", ad1);
+        webPlayer.loadHTML("https://s3-eu-west-1.amazonaws.com", ad6);
     }
 
     public void playAd2 (View v) {
@@ -70,6 +79,12 @@ public class MainActivity extends Activity {
             webPlayer = null;
         }
         webPlayer = new SAWebPlayer(this);
+        webPlayer.setEventListener(new SAWebPlayer.Listener() {
+            @Override
+            public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
+                Log.d("SuperAwesome/WebView", "Event is " + event + " | " + destination);
+            }
+        });
         webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         webPlayer.setContentSize(320, 480);
         banner1Holder.addView(webPlayer);
@@ -84,6 +99,12 @@ public class MainActivity extends Activity {
             webPlayer = null;
         }
         webPlayer = new SAWebPlayer(this);
+        webPlayer.setEventListener(new SAWebPlayer.Listener() {
+            @Override
+            public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
+                Log.d("SuperAwesome/WebView", "Event is " + event + " | " + destination);
+            }
+        });
         webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         webPlayer.setContentSize(320, 50);
         banner1Holder.addView(webPlayer);
@@ -98,6 +119,12 @@ public class MainActivity extends Activity {
             webPlayer = null;
         }
         webPlayer = new SAWebPlayer(this);
+        webPlayer.setEventListener(new SAWebPlayer.Listener() {
+            @Override
+            public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
+                Log.d("SuperAwesome/WebView", "Event is " + event + " | " + destination);
+            }
+        });
         webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         webPlayer.setContentSize(300, 50);
         banner1Holder.addView(webPlayer);
@@ -112,6 +139,12 @@ public class MainActivity extends Activity {
             webPlayer = null;
         }
         webPlayer = new SAWebPlayer(this);
+        webPlayer.setEventListener(new SAWebPlayer.Listener() {
+            @Override
+            public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
+                Log.d("SuperAwesome/WebView", "Event is " + event + " | " + destination);
+            }
+        });
         webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         webPlayer.setContentSize(320, 50);
         banner1Holder.addView(webPlayer);

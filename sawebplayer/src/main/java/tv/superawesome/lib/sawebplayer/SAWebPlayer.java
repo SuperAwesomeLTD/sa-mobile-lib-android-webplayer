@@ -33,7 +33,8 @@ public class SAWebPlayer extends RelativeLayout implements
         Web_Error,
         Web_Click,
         Web_Started,
-        Web_Layout
+        Web_Layout,
+        Web_Empty
     }
 
     // boolean holding whether the web view has finished loading or not
@@ -133,7 +134,12 @@ public class SAWebPlayer extends RelativeLayout implements
             command.getQuery(url);
 
             return false;
-        } else {
+        }
+        else if (url.equals("mopub://failLoad")) {
+            eventListener.saWebPlayerDidReceiveEvent(Event.Web_Empty, url);
+            return true;
+        }
+        else {
 
             if (finishedLoading) {
                 eventListener.saWebPlayerDidReceiveEvent(Event.Web_Click, url);
