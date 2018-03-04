@@ -30,6 +30,9 @@ public class SAWebView extends WebView {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             getSettings().setMediaPlaybackRequiresUserGesture(false);
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setWebContentsDebuggingEnabled(true);
+        }
         getSettings().setJavaScriptEnabled(true);
     }
 

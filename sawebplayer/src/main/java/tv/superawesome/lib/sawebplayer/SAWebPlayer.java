@@ -329,7 +329,8 @@ public class SAWebPlayer extends RelativeLayout implements
             mraid.injectMRAID();
 
             // load data directly, not from file as before
-            webView.loadHTML(base, html);
+//            webView.loadHTML(base, html);
+            webView.loadUrl(base);
 
             // call success listener
             eventListener.saWebPlayerDidReceiveEvent(Event.Web_Loaded, null);
