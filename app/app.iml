@@ -103,10 +103,10 @@
     <orderEntry type="library" name="support-media-compat-26.1.0" level="project" />
     <orderEntry type="library" name="support-compat-26.1.0" level="project" />
     <orderEntry type="library" name="recyclerview-v7-26.1.0" level="project" />
+    <orderEntry type="library" name="sautils-1.0.1" level="project" />
     <orderEntry type="library" name="support-annotations-26.1.0" level="project" />
     <orderEntry type="library" name="support-vector-drawable-26.1.0" level="project" />
     <orderEntry type="library" name="support-v4-26.1.0" level="project" />
-    <orderEntry type="library" name="sautils-1.0.0" level="project" />
     <orderEntry type="library" name="support-core-utils-26.1.0" level="project" />
     <orderEntry type="library" name="animated-vector-drawable-26.1.0" level="project" />
     <orderEntry type="library" name="support-fragment-26.1.0" level="project" />
