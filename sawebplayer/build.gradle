@@ -12,12 +12,12 @@ def siteUrl = 'https://github.com/SuperAwesomeLTD/sa-mobile-lib-android-webplaye
 def gitUrl = 'https://github.com/SuperAwesomeLTD/sa-mobile-lib-android-webplayer.git'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -82,5 +82,5 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'tv.superawesome.lib.sautils:sautils:0.3.6'
+    compile 'tv.superawesome.lib.sautils:sautils:1.0.0'
 }
