@@ -138,6 +138,11 @@ public class SAWebPlayer extends RelativeLayout implements
         else {
 
             if (finishedLoading) {
+
+                if (url.contains("sa-beta-ads-uploads-superawesome.netdna-ssl.com") && url.contains("/iframes")) {
+                    return false;
+                }
+
                 eventListener.saWebPlayerDidReceiveEvent(Event.Web_Click, url);
                 return true;
             }
