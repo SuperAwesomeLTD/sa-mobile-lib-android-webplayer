@@ -66,30 +66,30 @@ public class MainActivity extends Activity {
             }
         });
         webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        webPlayer.setContentSize(320, 480);
+        webPlayer.setContentSize(320, 50);
         banner1Holder.addView(webPlayer);
         webPlayer.setup();
-        webPlayer.loadHTML("http://172.16.1.39:3003/mraidad/index.html", ad6);
+        webPlayer.loadHTML("http://172.16.1.39:3003/mraidad/index.html", ad1);
     }
 
     public void playAd2 (View v) {
 
-//        if (webPlayer != null) {
-//            banner1Holder.removeView(webPlayer);
-//            webPlayer = null;
-//        }
-//        webPlayer = new SAWebPlayer(this);
-//        webPlayer.setEventListener(new SAWebPlayer.Listener() {
-//            @Override
-//            public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
-//                Log.d("SuperAwesome/WebView", "Event is " + event + " | " + destination);
-//            }
-//        });
-//        webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//        webPlayer.setContentSize(320, 480);
-//        banner1Holder.addView(webPlayer);
-//        webPlayer.setup();
-//        webPlayer.loadHTML("https://s3-eu-west-1.amazonaws.com", ad3);
+        if (webPlayer != null) {
+            banner1Holder.removeView(webPlayer);
+            webPlayer = null;
+        }
+        webPlayer = new SAWebPlayer(this);
+        webPlayer.setEventListener(new SAWebPlayer.Listener() {
+            @Override
+            public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
+                Log.d("SuperAwesome/WebView", "Event is " + event + " | " + destination);
+            }
+        });
+        webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        webPlayer.setContentSize(320, 480);
+        banner1Holder.addView(webPlayer);
+        webPlayer.setup();
+        webPlayer.loadHTML("https://s3-eu-west-1.amazonaws.com", ad2);
     }
 
     public void playAd3 (View v) {
@@ -106,50 +106,50 @@ public class MainActivity extends Activity {
             }
         });
         webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        webPlayer.setContentSize(320, 50);
+        webPlayer.setContentSize(480, 320);
         banner1Holder.addView(webPlayer);
         webPlayer.setup();
-        webPlayer.loadHTML(null, ad3);
+        webPlayer.loadHTML("https://s3-eu-west-1.amazonaws.com", ad3);
     }
 
     public void playAd4 (View v) {
 
-//        if (webPlayer != null) {
-//            banner1Holder.removeView(webPlayer);
-//            webPlayer = null;
-//        }
-//        webPlayer = new SAWebPlayer(this);
-//        webPlayer.setEventListener(new SAWebPlayer.Listener() {
-//            @Override
-//            public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
-//                Log.d("SuperAwesome/WebView", "Event is " + event + " | " + destination);
-//            }
-//        });
-//        webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//        webPlayer.setContentSize(300, 50);
-//        banner1Holder.addView(webPlayer);
-//        webPlayer.setup();
-//        webPlayer.loadHTML(null, mraid2);
+        if (webPlayer != null) {
+            banner1Holder.removeView(webPlayer);
+            webPlayer = null;
+        }
+        webPlayer = new SAWebPlayer(this);
+        webPlayer.setEventListener(new SAWebPlayer.Listener() {
+            @Override
+            public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
+                Log.d("SuperAwesome/WebView", "Event is " + event + " | " + destination);
+            }
+        });
+        webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        webPlayer.setContentSize(320, 480);
+        banner1Holder.addView(webPlayer);
+        webPlayer.setup();
+        webPlayer.loadHTML(null, ad4);
     }
 
     public void playAd5 (View v) {
 
-//        if (webPlayer != null) {
-//            banner1Holder.removeView(webPlayer);
-//            webPlayer = null;
-//        }
-//        webPlayer = new SAWebPlayer(this);
-//        webPlayer.setEventListener(new SAWebPlayer.Listener() {
-//            @Override
-//            public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
-//                Log.d("SuperAwesome/WebView", "Event is " + event + " | " + destination);
-//            }
-//        });
-//        webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//        webPlayer.setContentSize(320, 50);
-//        banner1Holder.addView(webPlayer);
-//        webPlayer.setup();
-//        webPlayer.loadHTML(null, mraid5);
+        if (webPlayer != null) {
+            banner1Holder.removeView(webPlayer);
+            webPlayer = null;
+        }
+        webPlayer = new SAWebPlayer(this);
+        webPlayer.setEventListener(new SAWebPlayer.Listener() {
+            @Override
+            public void saWebPlayerDidReceiveEvent(SAWebPlayer.Event event, String destination) {
+                Log.d("SuperAwesome/WebView", "Event is " + event + " | " + destination);
+            }
+        });
+        webPlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        webPlayer.setContentSize(320, 480);
+        banner1Holder.addView(webPlayer);
+        webPlayer.setup();
+        webPlayer.loadHTML(null, ad5);
     }
 
     private static String readFromFile (Context context, int ID) {
