@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:background="#ffffffff"
+    android:background="#ff0"
     tools:context="superawesome.tv.sawebplayerdemoapp.MainActivity">
 
-
-
     <LinearLayout
+        android:id="@+id/ButtonHolder"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="wrap_content">
 
         <Button
             android:layout_weight="1"
@@ -54,6 +53,8 @@
 
     <RelativeLayout
         android:id="@+id/Banner1Holder"
+        android:layout_margin="12dp"
+        android:layout_below="@+id/ButtonHolder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-</LinearLayout>
+</RelativeLayout>
