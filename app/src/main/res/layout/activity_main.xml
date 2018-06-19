@@ -48,11 +48,19 @@
             android:layout_height="50dp"
             android:text="Play 5"
             android:onClick="playAd5"/>
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="Play 6"
+            android:onClick="playAd6"/>
     </LinearLayout>
     <RelativeLayout
         android:id="@+id/Banner1Holder"
         android:layout_margin="12dp"
         android:layout_below="@+id/Buttons"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="#f00"/>
 </RelativeLayout>
