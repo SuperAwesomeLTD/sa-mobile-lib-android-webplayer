@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -95,8 +96,10 @@ public class SAWebPlayer extends RelativeLayout implements
     }
 
     public void setup () {
-        webView.setLayoutParams(new ViewGroup.LayoutParams(contentWidth, contentHeight));
-        holder.setLayoutParams(new FrameLayout.LayoutParams(holderWidth, holderHeight));
+        webView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        holder.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
 
         holder.addView(webView);
         this.addView(holder);
@@ -313,7 +316,12 @@ public class SAWebPlayer extends RelativeLayout implements
     @Override
     public void onGlobalLayout() {
 
-        webView.scale(contentWidth, contentHeight, holder.getMeasuredWidth(), holder.getMeasuredHeight());
+        Rect newValue = mapSourceSizeIntoBoundingSize(contentWidth, contentHeight, holder.getMeasuredWidth(), holder.getMeasuredHeight());
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(newValue.right, newValue.bottom);
+        params.setMargins(newValue.left, newValue.top, 0, 0);
+        webView.setLayoutParams(params);
+
+        // webView.scale(contentWidth, contentHeight, holder.getMeasuredWidth(), holder.getMeasuredHeight());
         eventListener.saWebPlayerDidReceiveEvent(Event.Web_Layout, null);
     }
 
@@ -356,5 +364,33 @@ public class SAWebPlayer extends RelativeLayout implements
     public interface Listener {
 
         void saWebPlayerDidReceiveEvent (Event event, String destination);
+    }
+
+    /**
+     * Private method that maps a source rect into a bounding rect.
+     *
+     * @param sourceW   source width
+     * @param sourceH   source height
+     * @param boundingW bounding width
+     * @param boundingH bounding height
+     * @return          the resulting correct rect
+     */
+    private Rect mapSourceSizeIntoBoundingSize(float sourceW, float sourceH, float boundingW, float boundingH) {
+        float sourceRatio = sourceW / sourceH;
+        float boundingRatio = boundingW / boundingH;
+        float X, Y, W, H;
+        if(sourceRatio > boundingRatio) {
+            W = boundingW;
+            H = W / sourceRatio;
+            X = 0.0F;
+            Y = (boundingH - H) / 2.0F;
+        } else {
+            H = boundingH;
+            W = sourceRatio * H;
+            Y = 0.0F;
+            X = (boundingW - W) / 2.0F;
+        }
+
+        return new Rect((int)X, (int)Y, (int)W, (int)H);
     }
 }
